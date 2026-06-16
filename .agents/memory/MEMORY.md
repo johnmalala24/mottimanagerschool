@@ -1,0 +1,1 @@
+- [Tailwind v4 spacing conflicts](tailwind-v4-spacing.md) — named spacing tokens in @theme affect max-w-* classes; fix by using @layer utilities for spacing overrides

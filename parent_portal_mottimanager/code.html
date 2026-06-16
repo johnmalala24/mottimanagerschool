@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Parent Portal | EduSmart CBE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mpesa-inner-shadow {
+            box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        @media (max-width: 768px) {
+            .mobile-canvas {
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#c9e6ff",
+                      "on-secondary-fixed-variant": "#3c475a",
+                      "outline-variant": "#bdcaba",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-tertiary-fixed": "#001e2f",
+                      "primary-container": "#00873a",
+                      "inverse-on-surface": "#eaf1ff",
+                      "secondary-fixed": "#d8e3fb",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#002109",
+                      "outline": "#6e7b6c",
+                      "surface-container": "#e5eeff",
+                      "on-surface": "#0b1c30",
+                      "tertiary-fixed-dim": "#89ceff",
+                      "inverse-primary": "#62df7d",
+                      "surface": "#f8f9ff",
+                      "on-tertiary-container": "#fcfcff",
+                      "on-primary-container": "#f7fff2",
+                      "primary": "#006b2c",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed-dim": "#bcc7de",
+                      "on-surface-variant": "#3e4a3d",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#007cb1",
+                      "on-secondary-fixed": "#111c2d",
+                      "primary-fixed": "#7ffc97",
+                      "error": "#ba1a1a",
+                      "on-background": "#0b1c30",
+                      "secondary-container": "#d5e0f8",
+                      "inverse-surface": "#213145",
+                      "on-primary-fixed-variant": "#005320",
+                      "surface-bright": "#f8f9ff",
+                      "surface-variant": "#d3e4fe",
+                      "surface-dim": "#cbdbf5",
+                      "secondary": "#545f73",
+                      "on-tertiary-fixed-variant": "#004c6e",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#00628d",
+                      "surface-tint": "#006e2d",
+                      "surface-container-high": "#dce9ff",
+                      "on-secondary-container": "#586377",
+                      "background": "#f8f9ff",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#62df7d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "32px",
+                      "3xl": "64px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "2xl": "48px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "title-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary">EduSmart CBE</h1>
+<p class="text-label-sm text-secondary">Parent Portal</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm bg-primary text-on-primary font-bold rounded-lg transition-all scale-95 duration-100" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Student Profile</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Attendance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Fees</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Results</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Communications</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<div class="mt-md p-md bg-surface-container rounded-xl flex items-center gap-sm">
+<img alt="Parent Profile" class="w-10 h-10 rounded-full bg-outline-variant" data-alt="A close-up professional portrait of a smiling middle-aged African woman with a warm, confident expression. She is wearing elegant, modern business-casual attire against a soft-focus office background. The lighting is bright and optimistic, maintaining a professional yet approachable tone that aligns with a high-end educational portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP0BBrGmlmUVPQfOSrHxn9er05Kuy7_TqLqpU6fg4nUZOgf2Iah8lUp99d8O7UQjpz2yNjfy6YNamVLFmTPbk8wONAYdw4Rq9c8Mo7QI36xc4G7CkhMgYAU2FvQPwcvKc48g34UtpO1KX9iwNTRavVFt1_UWg81EjunrwdAs-El7LTkxUJowncqDMyBEf7v4jmr6dyXZ4SuFPC7LYFRE7jVXfZL6gnEY9bCY-Vf0QmiGZfLB1RR5edzX0YmPDI_kJFKzLJyPlG9tBP"/>
+<div class="overflow-hidden">
+<p class="font-label-md text-label-md text-on-surface truncate">Sarah Kamau</p>
+<p class="text-label-sm text-secondary truncate">Parent Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-2xl mobile-canvas">
+<!-- Top App Bar (Mobile Only) -->
+<header class="md:hidden sticky top-0 bg-surface/95 backdrop-blur-md z-40 flex justify-between items-center py-md mb-lg">
+<div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary">EduSmart CBE</h1>
+<p class="text-label-sm text-secondary">Greenwood Academy</p>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Welcome Section -->
+<section class="mb-2xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Jambo, Sarah! 👋</h2>
+<p class="text-body-md text-secondary mt-xs">Here is what's happening with David today.</p>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Fee Balance Card (Prominent) -->
+<div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-2xl p-lg flex flex-col md:flex-row items-center gap-xl shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-700"></div>
+<div class="flex-1 w-full">
+<p class="text-label-md text-secondary uppercase tracking-wider">Fee Balance</p>
+<h3 class="text-display-lg font-display-lg text-on-surface mt-xs">KES 14,500</h3>
+<p class="text-label-sm text-secondary-container bg-on-secondary-container/10 inline-block px-sm py-1 rounded-full mt-sm">Due Date: 15th Nov 2024</p>
+</div>
+<div class="w-full md:w-auto flex flex-col gap-md">
+<button class="bg-primary text-on-primary px-xl py-md rounded-xl font-title-md text-title-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 transition-opacity active:scale-95 mpesa-inner-shadow">
+<span class="material-symbols-outlined">payments</span>
+                        Pay via M-Pesa
+                    </button>
+<button class="border border-outline text-on-surface px-xl py-md rounded-xl font-label-md text-label-md flex items-center justify-center gap-sm hover:bg-surface-container-low transition-colors">
+                        View Statement
+                    </button>
+</div>
+</div>
+<!-- Attendance Streak -->
+<div class="md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-2xl p-lg flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+<span class="text-label-sm text-primary font-bold">EXCELLENT</span>
+</div>
+<p class="text-label-md text-secondary">Attendance Streak</p>
+<h4 class="text-headline-lg font-headline-lg text-on-surface">15 Days</h4>
+</div>
+<div class="flex gap-xs mt-lg">
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-primary rounded-full"></div>
+<div class="h-1 flex-1 bg-outline-variant rounded-full"></div>
+</div>
+<p class="text-label-sm text-secondary mt-sm">David missed only 1 day this term.</p>
+</div>
+<!-- Recent Results -->
+<div class="md:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-2xl p-lg shadow-sm">
+<div class="flex justify-between items-center mb-xl">
+<h3 class="text-title-md font-title-md text-on-surface">Recent CBE Results</h3>
+<a class="text-label-md text-primary font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-lg">
+<!-- Result Item -->
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">functions</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Mathematics</p>
+<p class="text-label-sm text-secondary">Algebra & Fractions</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">Exceeding Expectations</p>
+<div class="flex gap-1 mt-1 justify-end">
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Result Item -->
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">language</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Kiswahili</p>
+<p class="text-label-sm text-secondary">Insha & Ufahamu</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-surface-variant">Meeting Expectations</p>
+<div class="flex gap-1 mt-1 justify-end">
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-primary rounded-full"></div>
+<div class="w-4 h-1 bg-outline-variant rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Announcements Feed -->
+<div class="md:col-span-5 bg-on-background text-inverse-primary rounded-2xl p-lg shadow-sm">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined">campaign</span>
+<h3 class="text-title-md font-title-md">School Announcements</h3>
+</div>
+<div class="space-y-lg">
+<div class="border-l-2 border-primary-fixed pl-md">
+<p class="text-label-sm text-secondary-fixed-dim">Oct 24, 2024</p>
+<p class="font-label-md text-label-md mt-xs">Parent-Teacher Conference scheduled for this Friday. Check your email for slots.</p>
+</div>
+<div class="border-l-2 border-outline pl-md">
+<p class="text-label-sm text-secondary-fixed-dim">Oct 20, 2024</p>
+<p class="font-label-md text-label-md mt-xs">Sports Day postponed due to weather conditions. New date TBD.</p>
+</div>
+<div class="border-l-2 border-outline pl-md">
+<p class="text-label-sm text-secondary-fixed-dim">Oct 18, 2024</p>
+<p class="font-label-md text-label-md mt-xs">End of Term examination timetable is now available for download.</p>
+</div>
+</div>
+<button class="w-full mt-xl py-sm bg-surface-container-lowest/10 rounded-lg text-label-md font-bold hover:bg-surface-container-lowest/20 transition-colors">
+                    Read All News
+                </button>
+</div>
+</div>
+<!-- Student Profile Quick View -->
+<section class="mt-3xl grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="md:col-span-1 bg-surface-container rounded-2xl p-lg flex flex-col items-center text-center">
+<img alt="Student Profile" class="w-24 h-24 rounded-full border-4 border-surface-container-lowest shadow-md mb-md" data-alt="A portrait of a young African boy around 10 years old, wearing a neat school uniform with a forest green sweater. He has a bright, intelligent smile and is posed in a brightly lit school hallway with a slight blur in the background. The aesthetic is clean, warm, and professional, reflecting the EduSmart brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8K81aoYvG8ZWyp5_isxCZ9wV8pR7FFX7Fn6ORACx0KqbJSoK0s20U4ZNtarOwE_BnCle5zdG_TTQoOTuc5x5-KFZhvkAKDRYryRkiM_y9bz4s06bsFdu4m0D545ZRvr1m4tbJQ56v0scHMCQnfHiQaWKfTFiyvc_JAHGBjPZhrEbdtJf1veQ-1FeprTyVdKP3LNlXLisKO5bEnJZ3cQ0DQLi4Fu_gtbbt09DrlTrE0d7NLZpt7de3Xi5miRi7cpIGWV76UBcpiMb1"/>
+<h4 class="text-title-md font-title-md text-on-surface">David Kamau</h4>
+<p class="text-label-md text-secondary">Grade 4 North • Student ID: #GK-4402</p>
+<div class="mt-lg flex flex-wrap justify-center gap-sm">
+<span class="px-md py-1 bg-surface-container-highest rounded-full text-label-sm font-bold text-on-surface">Football Team</span>
+<span class="px-md py-1 bg-surface-container-highest rounded-full text-label-sm font-bold text-on-surface">Drama Club</span>
+</div>
+</div>
+<div class="md:col-span-2 space-y-lg">
+<h3 class="text-title-md font-title-md text-on-surface">Quick Actions</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-md">
+<button class="flex flex-col items-center gap-sm p-md bg-surface-container-lowest border border-outline-variant rounded-xl hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">print</span>
+</div>
+<span class="text-label-sm">Report Card</span>
+</button>
+<button class="flex flex-col items-center gap-sm p-md bg-surface-container-lowest border border-outline-variant rounded-xl hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">event</span>
+</div>
+<span class="text-label-sm">Calendar</span>
+</button>
+<button class="flex flex-col items-center gap-sm p-md bg-surface-container-lowest border border-outline-variant rounded-xl hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<span class="text-label-sm">Meal Plan</span>
+</button>
+<button class="flex flex-col items-center gap-sm p-md bg-surface-container-lowest border border-outline-variant rounded-xl hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<span class="text-label-sm">Contact Teacher</span>
+</button>
+</div>
+<div class="bg-primary-container text-on-primary-container p-lg rounded-2xl flex items-center justify-between">
+<div>
+<h4 class="font-title-md text-title-md">Download Progress App</h4>
+<p class="text-label-md opacity-90">Track David's learning on the go.</p>
+</div>
+<span class="material-symbols-outlined text-4xl">smartphone</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center py-sm z-50">
+<a class="flex flex-col items-center gap-xs text-primary font-bold" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary-fixed-dim" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-label-sm">Fees</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary-fixed-dim" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-sm">Results</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary-fixed-dim" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Simple Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.97)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = '';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = '';
+            });
+        });
+
+        // Simulating a real-time update
+        setTimeout(() => {
+            console.log('Parent Portal Ready: Monitoring David Kamau - Grade 4 North');
+        }, 1000);
+    </script>
+</body></html>

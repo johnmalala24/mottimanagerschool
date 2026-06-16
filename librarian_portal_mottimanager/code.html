@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Librarian Portal | EduSmart CBE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#c9e6ff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "outline-variant": "#bdcaba",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-tertiary-fixed": "#001e2f",
+                        "primary-container": "#00873a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#002109",
+                        "outline": "#6e7b6c",
+                        "surface-container": "#e5eeff",
+                        "on-surface": "#0b1c30",
+                        "tertiary-fixed-dim": "#89ceff",
+                        "inverse-primary": "#62df7d",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-container": "#fcfcff",
+                        "on-primary-container": "#f7fff2",
+                        "primary": "#006b2c",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-surface-variant": "#3e4a3d",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#007cb1",
+                        "on-secondary-fixed": "#111c2d",
+                        "primary-fixed": "#7ffc97",
+                        "error": "#ba1a1a",
+                        "on-background": "#0b1c30",
+                        "secondary-container": "#d5e0f8",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed-variant": "#005320",
+                        "surface-bright": "#f8f9ff",
+                        "surface-variant": "#d3e4fe",
+                        "surface-dim": "#cbdbf5",
+                        "secondary": "#545f73",
+                        "on-tertiary-fixed-variant": "#004c6e",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#00628d",
+                        "surface-tint": "#006e2d",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-container": "#586377",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#62df7d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "3xl": "64px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; color: #0b1c30; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Integration -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary">EduSmart CBE</h1>
+<p class="text-label-sm font-label-sm text-secondary">Librarian Portal</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs custom-scrollbar overflow-y-auto">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-md p-md bg-primary text-on-primary font-bold rounded-lg font-label-md text-label-md shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="sync_alt">sync_alt</span> Circulation
+            </a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span> Book Catalog
+            </a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span> Member Mgmt
+            </a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span> Fines
+            </a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span> Reports
+            </a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md flex flex-col gap-xs">
+<div class="flex items-center gap-md p-sm mb-md">
+<img alt="Admin Profile" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="A professional headshot of a female school librarian with a warm and knowledgeable expression. She is wearing professional attire, and the background is a blurred school library with rows of neatly organized books and warm sunlight filtering through windows. The lighting is soft and flattering, creating an approachable and expert atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhHklGsynJlj29txyPVUPuBF-z7vlz-JMFcbwKvur9X1RCWv1mawDkbL75vp76d9cspUw73SVh4VWt2c-F6kDg51og_JsxpK6QJ_2Ib4qBhbXkwDz3MgZsp4OJBPPKtzHofwlF6nN0-evOdKKgguasqP-bEN28Ed2F0IZOS9IYpvuOLLtSunakF_-8IuKU1DGspkwWboundFfzSEgBpOpfakOF-0NP77kyfc3HEN1TJ7poW5Ly6EaXV8zrgWn7hEe6XlwHd-JLhqlL"/>
+<div>
+<p class="text-label-md font-bold">Jane Doe</p>
+<p class="text-label-sm text-secondary">Chief Librarian</p>
+</div>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col">
+<!-- Top Header -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-gutter py-md bg-surface/95 backdrop-blur-md border-b border-outline-variant">
+<div class="flex flex-col">
+<h2 class="text-title-md font-title-md text-on-surface">Circulation Center</h2>
+<p class="text-label-sm text-secondary">Manage book issues, returns, and track student activity.</p>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-md">search</span>
+<input class="pl-10 pr-md py-sm rounded-lg border-outline-variant bg-surface-container-low text-label-md focus:ring-primary focus:border-primary w-64 transition-all" placeholder="Global Catalog Search..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md hover:bg-primary-container transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="add">add</span> Add New Book
+                </button>
+</div>
+</header>
+<div class="p-gutter space-y-xl">
+<!-- Dashboard Stats Row -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="glass-card p-lg rounded-xl shadow-sm border-l-4 border-error flex items-center justify-between">
+<div>
+<p class="text-label-md text-secondary mb-xs">Books Overdue</p>
+<h3 class="text-headline-lg font-headline-lg text-error">42</h3>
+<p class="text-label-sm text-on-error-container mt-sm font-medium flex items-center gap-xs">
+<span class="material-symbols-outlined text-xs">priority_high</span> 12 critically late
+                        </p>
+</div>
+<div class="bg-error-container p-md rounded-full">
+<span class="material-symbols-outlined text-error" data-icon="running_with_errors">running_with_errors</span>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl shadow-sm border-l-4 border-primary flex items-center justify-between">
+<div>
+<p class="text-label-md text-secondary mb-xs">Total Books Issued</p>
+<h3 class="text-headline-lg font-headline-lg text-primary">856</h3>
+<p class="text-label-sm text-secondary mt-sm">Across all departments</p>
+</div>
+<div class="bg-primary-container/20 p-md rounded-full">
+<span class="material-symbols-outlined text-primary" data-icon="book">book</span>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl shadow-sm border-l-4 border-tertiary flex items-center justify-between">
+<div>
+<p class="text-label-md text-secondary mb-xs">New Arrivals</p>
+<h3 class="text-headline-lg font-headline-lg text-tertiary">18</h3>
+<p class="text-label-sm text-secondary mt-sm">Added this week</p>
+</div>
+<div class="bg-tertiary-fixed p-md rounded-full">
+<span class="material-symbols-outlined text-tertiary" data-icon="new_releases">new_releases</span>
+</div>
+</div>
+</section>
+<!-- Circulation Action Hub -->
+<section class="bento-grid">
+<!-- Book Issue/Return Interface -->
+<div class="col-span-12 lg:col-span-8 glass-card rounded-xl p-xl shadow-sm">
+<div class="flex items-center justify-between mb-lg">
+<h3 class="text-title-md font-title-md text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">swap_horiz</span> Issue / Return Terminal
+                        </h3>
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-lg py-xs bg-white rounded-md shadow-sm text-label-md font-bold text-primary transition-all">Issue</button>
+<button class="px-lg py-xs text-secondary text-label-md hover:text-primary transition-all">Return</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl mb-xl">
+<div class="space-y-md">
+<label class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Member Identification</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary">person_search</span>
+<input class="w-full pl-10 pr-md py-lg rounded-xl border border-outline-variant bg-surface-container-low text-body-md focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Scan ID or Search Student Name..." type="text"/>
+</div>
+<div class="p-md bg-secondary-container/30 rounded-lg border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-outline-variant text-secondary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="text-label-md text-secondary italic">No member selected</p>
+</div>
+</div>
+</div>
+<div class="space-y-md">
+<label class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Book Catalog Search</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary">barcode_scanner</span>
+<input class="w-full pl-10 pr-md py-lg rounded-xl border border-outline-variant bg-surface-container-low text-body-md focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Scan Barcode or Enter Book ID..." type="text"/>
+</div>
+<div class="p-md bg-secondary-container/30 rounded-lg border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-outline-variant text-secondary">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<div>
+<p class="text-label-md text-secondary italic">Waiting for scan...</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-md">
+<button class="px-xl py-md text-secondary border border-outline-variant rounded-xl font-label-md hover:bg-surface-variant transition-all">Clear Form</button>
+<button class="px-2xl py-md bg-primary text-on-primary rounded-xl font-bold shadow-lg hover:shadow-xl transform active:scale-95 transition-all">Complete Transaction</button>
+</div>
+</div>
+<!-- Recent Activity / Notifications -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+<div class="glass-card rounded-xl p-lg shadow-sm flex-1">
+<h4 class="text-label-md font-bold text-on-surface-variant mb-md flex items-center justify-between">
+<span>Recent Transactions</span>
+<span class="text-primary text-xs cursor-pointer hover:underline">View All</span>
+</h4>
+<div class="space-y-md custom-scrollbar overflow-y-auto max-h-[300px] pr-2">
+<div class="flex items-start gap-md p-sm border-b border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">login</span>
+</div>
+<div class="flex-1">
+<p class="text-label-sm font-bold">Kiplangat K. <span class="font-normal text-secondary">returned</span></p>
+<p class="text-label-sm text-on-surface-variant truncate">Biology Form 3: CBE Edition</p>
+<span class="text-[10px] text-secondary">2 mins ago</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-sm border-b border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-sm">logout</span>
+</div>
+<div class="flex-1">
+<p class="text-label-sm font-bold">Akinyi M. <span class="font-normal text-secondary">issued</span></p>
+<p class="text-label-sm text-on-surface-variant truncate">Things Fall Apart</p>
+<span class="text-[10px] text-secondary">15 mins ago</span>
+</div>
+</div>
+<div class="flex items-start gap-md p-sm border-b border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-sm">payment</span>
+</div>
+<div class="flex-1">
+<p class="text-label-sm font-bold">Maina P. <span class="font-normal text-secondary">paid fine</span></p>
+<p class="text-label-sm text-on-surface-variant">KES 250 via M-Pesa</p>
+<span class="text-[10px] text-secondary">1 hour ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Quick Link Card -->
+<div class="relative overflow-hidden rounded-xl h-40 group cursor-pointer">
+<img alt="Library Management" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A macro photograph of library book spines on a high-quality wooden shelf. The books vary in color and texture, showing age and frequent use, but are perfectly aligned. The lighting is warm and dramatic, highlighting the texture of the paper and leather bindings, creating a sophisticated and academic feel for a professional database-focused interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRUyWVwhJn-JZqa-koOiLktfX_Opce7Qq86VIrLrj9RPwLdev_bS332zd3D99P8qIS6tWCjFPBE4e7HWCXc5v3uaAORG0tmQ5CCV9zPEaAHtulQSaxsa93i9DcdwbPPNGG07UweTCcBZmuyFPjYWmg2MbRchrfX6BXFr6psu7gmszycYjmCLLzJ5P1BGVjbWnbxzEeMeEFyRYWUZjKdtyxZ7iTawQ5gkLMuWjr6csLPpVsdWWL47a19vAu0gW8THIL3EZWzL_jxux3"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-lg">
+<h4 class="text-white font-bold text-title-md">CBE Digital Catalog</h4>
+<p class="text-white/80 text-label-sm">Browse 12,000+ digital resources</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Table Section: Catalog Overview / Active Issues -->
+<section class="glass-card rounded-xl shadow-sm overflow-hidden">
+<div class="px-xl py-lg border-b border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Live Circulation Tracking</h3>
+<p class="text-label-sm text-secondary">Monitor current books in circulation and upcoming due dates.</p>
+</div>
+<div class="flex items-center gap-sm">
+<div class="flex border border-outline-variant rounded-lg overflow-hidden">
+<button class="px-md py-sm bg-surface-container text-label-sm font-bold border-r border-outline-variant">All</button>
+<button class="px-md py-sm hover:bg-surface-container text-label-sm">Overdue</button>
+<button class="px-md py-sm hover:bg-surface-container text-label-sm">Reserved</button>
+</div>
+<button class="p-sm text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">
+<tr>
+<th class="px-xl py-md">Book Title</th>
+<th class="px-xl py-md">Student Name</th>
+<th class="px-xl py-md">Issue Date</th>
+<th class="px-xl py-md">Due Date</th>
+<th class="px-xl py-md">Status</th>
+<th class="px-xl py-md">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 text-body-md">
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-xl py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-12 bg-secondary-container flex-shrink-0 rounded shadow-sm border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Advanced Mathematics Vol. 2</p>
+<p class="text-label-sm text-secondary">ISBN: 978-01-2345-67</p>
+</div>
+</div>
+</td>
+<td class="px-xl py-lg">
+<p class="font-medium">Omondi Brian</p>
+<p class="text-label-sm text-secondary">Grade 11 - Green</p>
+</td>
+<td class="px-xl py-lg text-secondary">Oct 24, 2024</td>
+<td class="px-xl py-lg text-secondary">Nov 07, 2024</td>
+<td class="px-xl py-lg">
+<span class="px-md py-xs bg-primary-container/20 text-primary rounded-full text-label-sm font-bold">On Time</span>
+</td>
+<td class="px-xl py-lg">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-surface-variant rounded-full text-secondary" title="Send Reminder">
+<span class="material-symbols-outlined text-md">mail</span>
+</button>
+<button class="p-sm hover:bg-surface-variant rounded-full text-secondary" title="Renew">
+<span class="material-symbols-outlined text-md">autorenew</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-error/5 transition-colors group bg-error/5">
+<td class="px-xl py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-12 bg-secondary-container flex-shrink-0 rounded shadow-sm border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">The River and the Source</p>
+<p class="text-label-sm text-secondary">ISBN: 978-02-1198-33</p>
+</div>
+</div>
+</td>
+<td class="px-xl py-lg">
+<p class="font-medium">Nekesa Hope</p>
+<p class="text-label-sm text-secondary">Grade 10 - Blue</p>
+</td>
+<td class="px-xl py-lg text-secondary">Oct 12, 2024</td>
+<td class="px-xl py-lg text-error font-bold italic">Oct 26, 2024</td>
+<td class="px-xl py-lg">
+<span class="px-md py-xs bg-error-container text-error rounded-full text-label-sm font-bold">5 Days Overdue</span>
+</td>
+<td class="px-xl py-lg">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-surface-variant rounded-full text-error" title="Send SMS Warning">
+<span class="material-symbols-outlined text-md">sms_failed</span>
+</button>
+<button class="p-sm hover:bg-surface-variant rounded-full text-secondary" title="View Fine Detail">
+<span class="material-symbols-outlined text-md">payments</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-xl py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-12 bg-secondary-container flex-shrink-0 rounded shadow-sm border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Chemistry for Excellence</p>
+<p class="text-label-sm text-secondary">ISBN: 978-05-9981-12</p>
+</div>
+</div>
+</td>
+<td class="px-xl py-lg">
+<p class="font-medium">Mutua John</p>
+<p class="text-label-sm text-secondary">Grade 12 - Science</p>
+</td>
+<td class="px-xl py-lg text-secondary">Oct 28, 2024</td>
+<td class="px-xl py-lg text-secondary">Nov 11, 2024</td>
+<td class="px-xl py-lg">
+<span class="px-md py-xs bg-primary-container/20 text-primary rounded-full text-label-sm font-bold">Issued Today</span>
+</td>
+<td class="px-xl py-lg">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-surface-variant rounded-full text-secondary">
+<span class="material-symbols-outlined text-md">mail</span>
+</button>
+<button class="p-sm hover:bg-surface-variant rounded-full text-secondary">
+<span class="material-symbols-outlined text-md">autorenew</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-xl py-md bg-surface-container-low flex justify-between items-center">
+<p class="text-label-sm text-secondary">Showing 1-3 of 856 issued items</p>
+<div class="flex gap-sm">
+<button class="p-xs border border-outline-variant rounded-lg hover:bg-white transition-all text-secondary disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-xs border border-outline-variant rounded-lg hover:bg-white transition-all text-secondary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="mt-auto w-full py-xl px-gutter grid grid-cols-2 md:grid-cols-4 gap-xl bg-on-background text-inverse-primary border-t border-outline">
+<div class="col-span-2">
+<h4 class="text-title-md font-title-md text-surface mb-md">EduSmart CBE</h4>
+<p class="text-body-md text-surface-variant mb-md max-w-sm">Elevating Kenyan education through precise CBE tracking and library management systems. Empowering administrators since 2024.</p>
+<p class="text-label-sm text-surface-variant">© 2024 EduSmart CBE. Built for the Kenyan CBE Landscape.</p>
+</div>
+<div>
+<h5 class="text-label-md font-bold text-white mb-md uppercase tracking-wider">Product</h5>
+<ul class="space-y-sm text-label-sm text-surface-variant">
+<li><a class="hover:text-white transition-colors" href="#">Features</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Pricing</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Support</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Help Center</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-label-md font-bold text-white mb-md uppercase tracking-wider">Company</h5>
+<ul class="space-y-sm text-label-sm text-surface-variant">
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</footer>
+</main>
+<!-- FAB for Quick Book Add -->
+<button class="fixed bottom-xl right-xl w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'opsz' 32;">qr_code_scanner</span>
+</button>
+<script>
+        // Micro-interactions for interaction states
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+                setTimeout(() => el.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Simple tab switching for Issue/Return (Visual Only)
+        const tabs = document.querySelectorAll('.flex.bg-surface-container button');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('bg-white', 'shadow-sm', 'font-bold', 'text-primary');
+                    t.classList.add('text-secondary');
+                });
+                tab.classList.add('bg-white', 'shadow-sm', 'font-bold', 'text-primary');
+                tab.classList.remove('text-secondary');
+            });
+        });
+    </script>
+</body></html>

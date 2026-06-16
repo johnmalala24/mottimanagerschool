@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Class Teacher Portal | EduSmart CBE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#c9e6ff",
+                      "on-secondary-fixed-variant": "#3c475a",
+                      "outline-variant": "#bdcaba",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-tertiary-fixed": "#001e2f",
+                      "primary-container": "#00873a",
+                      "inverse-on-surface": "#eaf1ff",
+                      "secondary-fixed": "#d8e3fb",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#002109",
+                      "outline": "#6e7b6c",
+                      "surface-container": "#e5eeff",
+                      "on-surface": "#0b1c30",
+                      "tertiary-fixed-dim": "#89ceff",
+                      "inverse-primary": "#62df7d",
+                      "surface": "#f8f9ff",
+                      "on-tertiary-container": "#fcfcff",
+                      "on-primary-container": "#f7fff2",
+                      "primary": "#006b2c",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed-dim": "#bcc7de",
+                      "on-surface-variant": "#3e4a3d",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#007cb1",
+                      "on-secondary-fixed": "#111c2d",
+                      "primary-fixed": "#7ffc97",
+                      "error": "#ba1a1a",
+                      "on-background": "#0b1c30",
+                      "secondary-container": "#d5e0f8",
+                      "inverse-surface": "#213145",
+                      "on-primary-fixed-variant": "#005320",
+                      "surface-bright": "#f8f9ff",
+                      "surface-variant": "#d3e4fe",
+                      "surface-dim": "#cbdbf5",
+                      "secondary": "#545f73",
+                      "on-tertiary-fixed-variant": "#004c6e",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#00628d",
+                      "surface-tint": "#006e2d",
+                      "surface-container-high": "#dce9ff",
+                      "on-secondary-container": "#586377",
+                      "background": "#f8f9ff",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#62df7d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "32px",
+                      "3xl": "64px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "2xl": "48px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "title-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-card {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.05);
+        }
+        .mpesa-card {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            background: #f1f5f9;
+        }
+        .progress-step {
+            height: 8px;
+            border-radius: 4px;
+        }
+        .sidebar-active {
+            background-color: #006b2c;
+            color: #ffffff;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar (Authority Source: JSON & System Logic) -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-40 hidden md:flex">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary">EduSmart CBE</h1>
+<p class="text-label-md text-secondary mt-xs">Grade 4 West • Portal</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<!-- Label mappings from requirements: My Class, Discipline Records, Parent Communication, Report Generation, Class Announcements -->
+<a class="sidebar-active flex items-center gap-md p-md rounded-lg scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">My Class</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span class="font-label-md text-label-md">Discipline Records</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-label-md text-label-md">Parent Communication</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-md text-label-md">Report Generation</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-label-md text-label-md">Class Announcements</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs pt-md border-t border-outline-variant">
+<div class="flex items-center gap-md p-sm mb-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">
+                    MN
+                </div>
+<div>
+<p class="font-label-md text-label-md">Mr. Nyong'o</p>
+<p class="text-label-sm text-secondary">Class Teacher</p>
+</div>
+</div>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant transition-all flex items-center gap-md p-sm rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 p-gutter lg:p-2xl">
+<!-- Header / Breadcrumbs -->
+<header class="mb-xl flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Class Overview</h2>
+<p class="text-body-md text-secondary">Grade 4 West • Term 3, 2024</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-md py-sm bg-white border border-outline rounded-lg font-label-md text-secondary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="print">print</span>
+                    Print Attendance
+                </button>
+<button class="flex items-center gap-sm px-md py-sm bg-primary text-white rounded-lg font-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+                    New Announcement
+                </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Attendance Trend Card -->
+<section class="md:col-span-8 tonal-card rounded-xl p-xl flex flex-col">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-title-md text-title-md">Attendance &amp; Participation</h3>
+<div class="flex items-center gap-xs px-sm py-xs bg-surface-container rounded-lg text-label-sm text-primary">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span>
+                        94% This Week
+                    </div>
+</div>
+<div class="h-64 relative w-full flex items-end justify-between gap-sm pt-md">
+<!-- Simple CSS Chart Bar Representation -->
+<div class="flex flex-col items-center gap-sm w-full">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40 h-[80%]"></div>
+<span class="text-label-sm text-secondary">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-sm w-full">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40 h-[95%]"></div>
+<span class="text-label-sm text-secondary">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-sm w-full">
+<div class="w-full bg-primary rounded-t-lg transition-all hover:opacity-80 h-[88%]"></div>
+<span class="text-label-sm text-secondary">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-sm w-full">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40 h-[92%]"></div>
+<span class="text-label-sm text-secondary">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-sm w-full">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40 h-[75%]"></div>
+<span class="text-label-sm text-secondary">Fri</span>
+</div>
+</div>
+</section>
+<!-- Report Card Workflow Status -->
+<section class="md:col-span-4 tonal-card rounded-xl p-xl bg-surface-container-low">
+<h3 class="font-title-md text-title-md mb-md">Report Generation</h3>
+<div class="flex flex-col gap-lg">
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between font-label-md">
+<span>Workflow Status</span>
+<span class="text-primary">28 / 40 Completed</span>
+</div>
+<div class="w-full bg-outline-variant h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full transition-all duration-700" style="width: 70%"></div>
+</div>
+</div>
+<ul class="flex flex-col gap-md">
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label-md">Subject Grades Sync</p>
+<p class="text-label-sm text-secondary">Verified by 6/6 Teachers</p>
+</div>
+</li>
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label-md">Core Competencies</p>
+<p class="text-label-sm text-secondary">Assessed for all students</p>
+</div>
+</li>
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="pending">pending</span>
+<div>
+<p class="font-label-md">Teacher Remarks</p>
+<p class="text-label-sm text-secondary">12 remaining</p>
+</div>
+</li>
+</ul>
+<button class="w-full py-md bg-primary text-white font-label-md rounded-lg hover:opacity-90 transition-opacity">
+                        Continue Remarking
+                    </button>
+</div>
+</section>
+<!-- Parent Directory (Table Layout) -->
+<section class="md:col-span-12 tonal-card rounded-xl overflow-hidden">
+<div class="p-xl border-b border-outline-variant flex justify-between items-center bg-white">
+<h3 class="font-title-md text-title-md">Parent Directory</h3>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-secondary text-[20px]" data-icon="search">search</span>
+<input class="w-full pl-xl pr-md py-sm rounded-lg border-outline-variant text-label-md focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Search student or parent..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="p-md font-label-md text-secondary">Student Name</th>
+<th class="p-md font-label-md text-secondary">Primary Contact</th>
+<th class="p-md font-label-md text-secondary">Phone Number</th>
+<th class="p-md font-label-md text-secondary">Status</th>
+<th class="p-md font-label-md text-secondary text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center font-bold text-secondary text-[12px]">AW</div>
+<span class="font-label-md">Adhiambo, Wendy</span>
+</div>
+</td>
+<td class="p-md font-body-md text-on-surface">Mary Adhiambo (Mother)</td>
+<td class="p-md font-body-md text-on-surface">+254 712 345 678</td>
+<td class="p-md">
+<span class="px-sm py-xs bg-primary-container/10 text-primary-container text-label-sm rounded-full">Paid Up</span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary font-label-md flex items-center gap-xs ml-auto hover:underline">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+                                        Message
+                                    </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center font-bold text-secondary text-[12px]">BO</div>
+<span class="font-label-md">Baraka, Otieno</span>
+</div>
+</td>
+<td class="p-md font-body-md text-on-surface">Peter Otieno (Father)</td>
+<td class="p-md font-body-md text-on-surface">+254 723 987 654</td>
+<td class="p-md">
+<span class="px-sm py-xs bg-error-container text-on-error-container text-label-sm rounded-full">Arrears</span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary font-label-md flex items-center gap-xs ml-auto hover:underline">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+                                        Message
+                                    </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center font-bold text-secondary text-[12px]">CM</div>
+<span class="font-label-md">Cherono, Mercy</span>
+</div>
+</td>
+<td class="p-md font-body-md text-on-surface">Sarah Cherono (Guardian)</td>
+<td class="p-md font-body-md text-on-surface">+254 755 121 212</td>
+<td class="p-md">
+<span class="px-sm py-xs bg-primary-container/10 text-primary-container text-label-sm rounded-full">Paid Up</span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary font-label-md flex items-center gap-xs ml-auto hover:underline">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+                                        Message
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md bg-surface-container-low text-center">
+<button class="text-primary font-label-md hover:underline transition-all">View All 40 Students</button>
+</div>
+</section>
+<!-- Performance Tracker & CBE Progress -->
+<section class="md:col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<div class="tonal-card p-xl rounded-xl">
+<h4 class="font-title-md text-title-md mb-lg">Class Performance</h4>
+<div class="flex items-center justify-between mb-md">
+<span class="text-label-md text-secondary">Mean Grade (CBE Equivalent)</span>
+<span class="font-title-md text-primary">Meeting Expectation (ME)</span>
+</div>
+<div class="flex gap-1 mb-md">
+<div class="h-2 flex-1 rounded-full bg-primary"></div>
+<div class="h-2 flex-1 rounded-full bg-primary"></div>
+<div class="h-2 flex-1 rounded-full bg-primary"></div>
+<div class="h-2 flex-1 rounded-full bg-outline-variant"></div>
+</div>
+<p class="text-label-sm text-secondary">Based on mid-term assessments across all learning areas.</p>
+</div>
+<div class="tonal-card p-xl rounded-xl">
+<h4 class="font-title-md text-title-md mb-lg">Discipline Overview</h4>
+<div class="flex gap-md items-center">
+<div class="p-md bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="font-headline-lg-mobile text-on-background">0</p>
+<p class="text-label-sm text-secondary">Major Incidents this Week</p>
+</div>
+</div>
+</div>
+<div class="tonal-card p-xl rounded-xl bg-on-background text-white">
+<h4 class="font-title-md text-title-md mb-md text-primary-fixed">Upcoming Events</h4>
+<ul class="flex flex-col gap-md">
+<li class="flex gap-md items-start">
+<div class="px-sm py-xs bg-primary-container text-white rounded font-bold text-label-sm">24 OCT</div>
+<div>
+<p class="font-label-md">Grade 4 Tree Planting</p>
+<p class="text-label-sm text-secondary-fixed-dim">School Forest Site</p>
+</div>
+</li>
+<li class="flex gap-md items-start">
+<div class="px-sm py-xs bg-outline-variant text-on-surface rounded font-bold text-label-sm">28 OCT</div>
+<div>
+<p class="font-label-md">End Term Assessments</p>
+<p class="text-label-sm text-secondary-fixed-dim">Main Classroom</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Visible only on mobile) -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around p-sm md:hidden z-50">
+<a class="flex flex-col items-center gap-xs text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold">Class</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span class="text-[10px]">Records</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-[10px]">Chat</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-[10px]">Reports</span>
+</a>
+</nav>
+<!-- Visual Polish: Soft Decorative Background -->
+<div class="fixed top-0 right-0 -z-10 opacity-10 pointer-events-none w-1/3 h-full">
+
+</div>
+<!-- M-Pesa Integration Visual Highlight (Small contextual FAB or alert) -->
+<div class="fixed bottom-gutter right-gutter hidden md:block">
+<div class="tonal-card p-md rounded-xl bg-white flex items-center gap-md border-l-4 border-primary">
+<div class="p-sm bg-primary-container rounded-lg">
+<span class="material-symbols-outlined text-white" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="font-label-sm text-secondary">Fee Status Check</p>
+<p class="font-label-md text-primary">5 pending M-Pesa push requests</p>
+</div>
+<button class="ml-xl text-primary font-bold text-label-sm hover:underline">Review</button>
+</div>
+</div>
+<script>
+        // Simple micro-interaction for sidebar hover
+        document.querySelectorAll('aside nav a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if(!link.classList.contains('sidebar-active')) {
+                    link.style.transform = 'translateX(4px)';
+                }
+            });
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

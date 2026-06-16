@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Portal | EduSmart CBE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#c9e6ff",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "outline-variant": "#bdcaba",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary-fixed": "#001e2f",
+                    "primary-container": "#00873a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#002109",
+                    "outline": "#6e7b6c",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "tertiary-fixed-dim": "#89ceff",
+                    "inverse-primary": "#62df7d",
+                    "surface": "#f8f9ff",
+                    "on-tertiary-container": "#fcfcff",
+                    "on-primary-container": "#f7fff2",
+                    "primary": "#006b2c",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-surface-variant": "#3e4a3d",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#007cb1",
+                    "on-secondary-fixed": "#111c2d",
+                    "primary-fixed": "#7ffc97",
+                    "error": "#ba1a1a",
+                    "on-background": "#0b1c30",
+                    "secondary-container": "#d5e0f8",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#005320",
+                    "surface-bright": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "surface-dim": "#cbdbf5",
+                    "secondary": "#545f73",
+                    "on-tertiary-fixed-variant": "#004c6e",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#00628d",
+                    "surface-tint": "#006e2d",
+                    "surface-container-high": "#dce9ff",
+                    "on-secondary-container": "#586377",
+                    "background": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#62df7d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "3xl": "64px",
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "title-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .mastery-4 { background: #006b2c; }
+        .mastery-3 { background: #00a844; }
+        .mastery-2 { background: #62df7d; }
+        .mastery-1 { background: #bdf6c7; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bcc7de; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Mobile SideNav (Hidden on Desktop) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center py-sm shadow-lg">
+<button class="flex flex-col items-center gap-xs text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-secondary">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm">Timetable</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-secondary">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-secondary">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Grades</span>
+</button>
+</nav>
+<!-- Desktop SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-0 h-screen w-64 flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant z-40">
+<div class="mb-xl flex items-center gap-md">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="font-title-md text-title-md font-bold text-primary">EduSmart</span>
+</div>
+<nav class="flex flex-col gap-xs grow">
+<a class="flex items-center gap-md px-md py-sm bg-primary text-on-primary font-bold rounded-lg transition-all scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Timetable</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-label-md">Assignments</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Performance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-label-md text-label-md">Portfolio</span>
+</a>
+<div class="my-md border-t border-outline-variant opacity-30"></div>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</nav>
+<div class="mt-auto p-md glass-card rounded-xl flex items-center gap-md">
+<img alt="Profile" class="w-10 h-10 rounded-full object-cover" data-alt="A close-up portrait of a cheerful African primary school student with a bright smile, wearing a neat green school uniform. The background is a softly blurred modern classroom with educational posters, bathed in warm, natural daylight. The image has a clean, high-end photographic feel that emphasizes a positive and supportive educational environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNuHvzYjZA1-akHT14bu6YDfqPXx25fQz5IJpDjAER_4BM7KVZ0gSL9kIDGy-7Ol6-BiDUHcIqZyGN62FD0B6iN1PsiHefwn83Y1ie6yn-4KFJ03SWvP8L2TnYWAy7y9ZWfk4UWeOlpBwUB6CabIvPq1zRim79tVabisOlpzg2yxT_vZ2I5535loK0XAko1zGmnaSDRk5HD-Is6gb_zmuRING9DovCSAjIQyiLXgZhcznaOgBVEf-9vkVV8jkp9-8IGzEWVOu-8rHt"/>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Juma K.</p>
+<p class="text-[10px] text-secondary">Grade 5 East</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 p-gutter pb-32 md:pb-gutter">
+<!-- Top App Bar -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-2xl">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Habari, Juma! 👋</h1>
+<p class="font-body-md text-body-md text-secondary">Ready for another day of exploring and learning?</p>
+</div>
+<div class="flex items-center gap-md">
+<button class="relative w-10 h-10 flex items-center justify-center bg-surface-container-high rounded-full text-secondary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-sm bg-primary-container/10 px-md py-sm rounded-full">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-label-md text-label-md font-bold text-primary">240 Mastery Points</span>
+</div>
+</div>
+</header>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Bento Grid: Main Analytics & Progress -->
+<section class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Performance Snapshot -->
+<div class="bg-surface-container-lowest p-xl rounded-2xl shadow-sm border border-outline-variant/30">
+<div class="flex items-center justify-between mb-xl">
+<h2 class="font-title-md text-title-md text-on-surface">Performance Analytics</h2>
+<button class="text-primary font-label-md flex items-center gap-xs">View Report <span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+</div>
+<div class="h-64 w-full flex items-end gap-md md:gap-lg px-md">
+<!-- Simulated Chart -->
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 65%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">Maths</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 85%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">Science</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 45%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">English</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 95%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">Swahili</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 70%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">Arts</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 80%;"></div>
+<span class="text-[10px] font-label-sm text-secondary uppercase tracking-wider">C.T</span>
+</div>
+</div>
+</div>
+<!-- Weekly Timetable Grid -->
+<div class="bg-surface-container-lowest p-xl rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden">
+<h2 class="font-title-md text-title-md text-on-surface mb-xl">Weekly Timetable</h2>
+<div class="overflow-x-auto">
+<div class="min-w-[600px] grid grid-cols-6 gap-sm">
+<!-- Header -->
+<div class="p-sm text-center"></div>
+<div class="p-sm text-center font-label-sm text-secondary">Mon</div>
+<div class="p-sm text-center font-label-sm text-secondary">Tue</div>
+<div class="p-sm text-center font-label-sm text-secondary">Wed</div>
+<div class="p-sm text-center font-label-sm text-secondary">Thu</div>
+<div class="p-sm text-center font-label-sm text-secondary">Fri</div>
+<!-- Row 1 -->
+<div class="p-sm flex items-center font-label-sm text-secondary">08:00 AM</div>
+<div class="p-md bg-primary-container/10 border border-primary/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-primary">Maths</p>
+<p class="text-[10px] text-primary/70">Rm 4</p>
+</div>
+<div class="p-md bg-secondary-container/20 border border-secondary/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-secondary">Science</p>
+<p class="text-[10px] text-secondary/70">Lab 1</p>
+</div>
+<div class="p-md bg-tertiary-container/10 border border-tertiary/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-tertiary">Music</p>
+<p class="text-[10px] text-tertiary/70">Hall</p>
+</div>
+<div class="p-md bg-primary-container/10 border border-primary/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-primary">Maths</p>
+<p class="text-[10px] text-primary/70">Rm 4</p>
+</div>
+<div class="p-md bg-error-container/20 border border-error/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-error">PE</p>
+<p class="text-[10px] text-error/70">Field</p>
+</div>
+<!-- Row 2 (Current Slot Highlight) -->
+<div class="p-sm flex items-center font-label-sm text-secondary">10:30 AM</div>
+<div class="p-md bg-secondary-container/20 border border-secondary/20 rounded-xl text-center">
+<p class="text-[12px] font-bold text-secondary">English</p>
+</div>
+<div class="p-md bg-primary border-2 border-primary-fixed shadow-md rounded-xl text-center ring-4 ring-primary/20">
+<p class="text-[12px] font-bold text-on-primary">Maths</p>
+<span class="text-[8px] bg-on-primary text-primary px-1 rounded uppercase font-bold">Now</span>
+</div>
+<div class="p-md bg-surface-container border border-outline-variant/30 rounded-xl text-center">
+<p class="text-[12px] font-bold text-on-surface-variant">Swahili</p>
+</div>
+<div class="p-md bg-surface-container border border-outline-variant/30 rounded-xl text-center">
+<p class="text-[12px] font-bold text-on-surface-variant">Social S.</p>
+</div>
+<div class="p-md bg-surface-container border border-outline-variant/30 rounded-xl text-center">
+<p class="text-[12px] font-bold text-on-surface-variant">C.R.E</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sidebar Content: Assignments & CBE -->
+<aside class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Current Assignments -->
+<div class="bg-surface-container-lowest p-xl rounded-2xl shadow-sm border border-outline-variant/30">
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-title-md text-title-md text-on-surface">Assignments</h2>
+<span class="bg-error-container text-on-error-container text-[10px] font-bold px-sm py-xs rounded-full">3 Pending</span>
+</div>
+<div class="space-y-md">
+<div class="flex gap-md p-md hover:bg-surface-variant/20 rounded-xl transition-all cursor-pointer group">
+<div class="w-12 h-12 bg-primary-container/10 flex items-center justify-center rounded-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">biotech</span>
+</div>
+<div class="grow">
+<p class="font-label-md text-label-md font-bold text-on-surface">Plant Life Cycle</p>
+<p class="text-[12px] text-secondary">Due: Tomorrow, 4:00 PM</p>
+<div class="mt-xs w-full bg-outline-variant/30 h-1 rounded-full overflow-hidden">
+<div class="bg-primary w-3/4 h-full"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-md p-md hover:bg-surface-variant/20 rounded-xl transition-all cursor-pointer group">
+<div class="w-12 h-12 bg-tertiary-container/10 flex items-center justify-center rounded-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary">edit_note</span>
+</div>
+<div class="grow">
+<p class="font-label-md text-label-md font-bold text-on-surface">Creative Writing</p>
+<p class="text-[12px] text-secondary">Due: Friday, 11:59 PM</p>
+<div class="mt-xs w-full bg-outline-variant/30 h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary w-1/4 h-full"></div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-lg py-md border border-outline text-secondary font-label-md rounded-xl hover:bg-secondary/5 transition-all">View All Work</button>
+</div>
+<!-- CBE Corner -->
+<div class="bg-on-background p-xl rounded-2xl shadow-xl relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+<h2 class="font-title-md text-title-md text-surface-container-lowest mb-sm z-10 relative">CBE Explorer</h2>
+<p class="text-secondary-fixed-dim text-body-md mb-xl z-10 relative">Track your journey through the competency landscape.</p>
+<div class="space-y-lg z-10 relative">
+<button class="w-full flex items-center justify-between p-md bg-surface-container-highest/10 hover:bg-surface-container-highest/20 border border-surface-container-highest/20 rounded-xl transition-all">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-fixed">photo_library</span>
+<span class="text-surface font-label-md">Learner Portfolio</span>
+</div>
+<span class="material-symbols-outlined text-surface/50">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-md bg-surface-container-highest/10 hover:bg-surface-container-highest/20 border border-surface-container-highest/20 rounded-xl transition-all">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-fixed">description</span>
+<span class="text-surface font-label-md">Competency Reports</span>
+</div>
+<span class="material-symbols-outlined text-surface/50">chevron_right</span>
+</button>
+</div>
+<div class="mt-2xl">
+<p class="text-[10px] uppercase font-bold text-secondary-fixed-dim mb-sm tracking-widest">Mastery Level</p>
+<div class="flex gap-xs">
+<div class="flex-1 h-3 rounded-full mastery-4"></div>
+<div class="flex-1 h-3 rounded-full mastery-4"></div>
+<div class="flex-1 h-3 rounded-full mastery-3"></div>
+<div class="flex-1 h-3 rounded-full mastery-2 opacity-50"></div>
+<div class="flex-1 h-3 rounded-full bg-surface-container-highest/10"></div>
+</div>
+<p class="text-[12px] text-surface/70 mt-sm">You are 65% towards "Exceeding Expectations" in Science!</p>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-surface-container p-lg rounded-2xl flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-xs" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">98%</span>
+<span class="text-[10px] font-bold text-secondary uppercase">Attendance</span>
+</div>
+<div class="bg-surface-container p-lg rounded-2xl flex flex-col items-center">
+<span class="material-symbols-outlined text-tertiary mb-xs" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">12</span>
+<span class="text-[10px] font-bold text-secondary uppercase">Badges Earned</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer Space for Desktop -->
+<footer class="md:ml-64 py-xl px-gutter bg-surface-container-lowest border-t border-outline-variant mt-2xl hidden md:block">
+<div class="flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-label-sm text-label-sm text-secondary">© 2024 EduSmart CBE. Built for the Kenyan CBE Landscape.</p>
+<div class="flex gap-lg">
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the sidebar active state logic
+        document.querySelectorAll('aside nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Not preventing default to allow navigation, but simulating active switch
+                document.querySelectorAll('aside nav a').forEach(l => {
+                    l.className = "flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all";
+                    l.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+                });
+                this.className = "flex items-center gap-md px-md py-sm bg-primary text-on-primary font-bold rounded-lg transition-all scale-95 duration-100";
+                this.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+
+        // Add a simple animation for the performance chart on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.rounded-t-lg');
+            bars.forEach((bar, index) => {
+                const finalHeight = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'height 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    bar.style.height = finalHeight;
+                }, 200 + (index * 100));
+            });
+        });
+    </script>
+</body></html>

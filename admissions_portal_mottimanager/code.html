@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduSmart CBE | Admissions Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#c9e6ff",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "outline-variant": "#bdcaba",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-tertiary-fixed": "#001e2f",
+                    "primary-container": "#00873a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#002109",
+                    "outline": "#6e7b6c",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "tertiary-fixed-dim": "#89ceff",
+                    "inverse-primary": "#62df7d",
+                    "surface": "#f8f9ff",
+                    "on-tertiary-container": "#fcfcff",
+                    "on-primary-container": "#f7fff2",
+                    "primary": "#006b2c",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-surface-variant": "#3e4a3d",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#007cb1",
+                    "on-secondary-fixed": "#111c2d",
+                    "primary-fixed": "#7ffc97",
+                    "error": "#ba1a1a",
+                    "on-background": "#0b1c30",
+                    "secondary-container": "#d5e0f8",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#005320",
+                    "surface-bright": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "surface-dim": "#cbdbf5",
+                    "secondary": "#545f73",
+                    "on-tertiary-fixed-variant": "#004c6e",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#00628d",
+                    "surface-tint": "#006e2d",
+                    "surface-container-high": "#dce9ff",
+                    "on-secondary-container": "#586377",
+                    "background": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#62df7d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "base": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "3xl": "64px",
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "title-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .funnel-step::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 12px solid currentColor;
+            border-top: 24px solid transparent;
+            border-bottom: 24px solid transparent;
+            z-index: 10;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-40 hidden md:flex">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary font-bold">EduSmart</h1>
+<p class="text-label-md font-label-md text-secondary">Admissions Portal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md px-md py-sm bg-primary text-on-primary font-bold rounded-lg transition-all scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-md text-label-md">Applications</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span class="font-label-md text-label-md">Registrations</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span class="font-label-md text-label-md">Admission Letters</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-label-md text-label-md">Document Verification</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label-md text-label-md">Enrollment Reports</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg space-y-1 border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<div class="flex items-center gap-md p-sm mt-md bg-white rounded-xl shadow-sm border border-outline-variant">
+<img alt="Admin Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a friendly school administrator in a clean office setting. The individual is wearing professional attire, looking directly at the camera with a warm smile. The lighting is soft and natural, emphasizing a trustworthy and welcoming persona for a high-end educational software interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh6e8Zopi4Wpro9VbXsXkj7iQrqyYlPZBWOEUCldiJNYsMBoxRYUHcKyjDbx86NJyuE2Usz3mIfFisdT-9FXI1H3H51Et2SUR4jtMqnJBvk5kmzQxOf2f61JwS1jWnNd7zuX37M-9xYkUdBeBs3ge5z1QcF8g3cBs5x_qFvk3kGybTa-Fz9L2ogavqxAq1GP5TOGxL_ljUrNY18eoiFwrWPtVQWxTFLQdKW9M69Ok5x-sNuJyj9Q0-uUZWtePlHBFRRyNUh4EwG5Gp"/>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface font-bold">James Omondi</p>
+<p class="text-[10px] text-secondary">Registrar</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen p-gutter">
+<!-- Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between mb-2xl gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Admissions Overview</h2>
+<p class="font-body-md text-body-md text-secondary">Greenwood Academy Academic Year 2024/25</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-white border border-outline px-lg py-sm rounded-lg flex items-center gap-sm text-label-md font-label-md text-secondary hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined" data-icon="file_download">file_download</span>
+                    Export Data
+                </button>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg flex items-center gap-sm text-label-md font-label-md shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    New Application
+                </button>
+</div>
+</header>
+<!-- Applications Funnel (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-2xl">
+<!-- New -->
+<div class="glass-card p-lg rounded-xl flex flex-col relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-surface-container-highest/30 rounded-full -mr-8 -mt-8"></div>
+<span class="material-symbols-outlined text-primary mb-md" data-icon="fiber_new">fiber_new</span>
+<h3 class="text-label-md font-label-md text-secondary uppercase tracking-wider">New</h3>
+<div class="flex items-baseline gap-sm mt-xs">
+<span class="text-headline-lg font-bold">142</span>
+<span class="text-primary text-label-sm font-bold flex items-center">+12% <span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span></span>
+</div>
+<div class="mt-md h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+</div>
+<!-- Under Review -->
+<div class="glass-card p-lg rounded-xl flex flex-col relative overflow-hidden">
+<span class="material-symbols-outlined text-tertiary mb-md" data-icon="pending_actions">pending_actions</span>
+<h3 class="text-label-md font-label-md text-secondary uppercase tracking-wider">Under Review</h3>
+<div class="flex items-baseline gap-sm mt-xs">
+<span class="text-headline-lg font-bold">86</span>
+<span class="text-secondary text-label-sm font-bold">Stable</span>
+</div>
+<div class="mt-md h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[40%]"></div>
+</div>
+</div>
+<!-- Approved -->
+<div class="glass-card p-lg rounded-xl flex flex-col relative overflow-hidden">
+<span class="material-symbols-outlined text-primary-container mb-md" data-icon="check_circle">check_circle</span>
+<h3 class="text-label-md font-label-md text-secondary uppercase tracking-wider">Approved</h3>
+<div class="flex items-baseline gap-sm mt-xs">
+<span class="text-headline-lg font-bold">54</span>
+<span class="text-primary text-label-sm font-bold">+5%</span>
+</div>
+<div class="mt-md h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[25%]"></div>
+</div>
+</div>
+<!-- Enrolled -->
+<div class="bg-on-primary-fixed-variant p-lg rounded-xl flex flex-col relative overflow-hidden">
+<span class="material-symbols-outlined text-primary-fixed mb-md" data-icon="school">school</span>
+<h3 class="text-label-md font-label-md text-primary-fixed-dim uppercase tracking-wider">Enrolled</h3>
+<div class="flex items-baseline gap-sm mt-xs text-white">
+<span class="text-headline-lg font-bold">312</span>
+<span class="text-primary-fixed text-label-sm font-bold flex items-center"><span class="material-symbols-outlined text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span> Goal Met</span>
+</div>
+<div class="mt-md h-1.5 w-full bg-on-primary-fixed rounded-full overflow-hidden">
+<div class="bg-primary-fixed h-full w-[88%]"></div>
+</div>
+</div>
+</section>
+<!-- Recent Applications Table Section -->
+<section class="bg-white rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-title-md text-title-md">Recent Applications</h3>
+<div class="flex gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-secondary" data-icon="search">search</span>
+<input class="pl-10 pr-md py-xs border border-outline rounded-lg text-label-md focus:ring-primary focus:border-primary" placeholder="Search applicant..." type="text"/>
+</div>
+<button class="p-xs text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant border-b border-outline-variant">
+<tr>
+<th class="px-lg py-md font-label-md text-label-md">Applicant Name</th>
+<th class="px-lg py-md font-label-md text-label-md">Grade/Level</th>
+<th class="px-lg py-md font-label-md text-label-md">Document Status</th>
+<th class="px-lg py-md font-label-md text-label-md">Review Progress</th>
+<th class="px-lg py-md font-label-md text-label-md">Applied Date</th>
+<th class="px-lg py-md font-label-md text-label-md">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold">AM</div>
+<div>
+<p class="font-label-md text-label-md">Amara Mutua</p>
+<p class="text-[12px] text-secondary">ID: #ADM-2401</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-label-md">Grade 4 (CBE)</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 bg-primary-container/10 text-on-primary-fixed-variant text-[12px] font-bold rounded-full flex items-center w-fit gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+                                    Verified
+                                </span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-2 bg-surface-variant rounded-full overflow-hidden max-w-[100px]">
+<div class="bg-primary h-full w-[100%]"></div>
+</div>
+<span class="text-[12px] font-bold">100%</span>
+</div>
+</td>
+<td class="px-lg py-md text-label-md text-secondary">Oct 12, 2023</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline font-label-md text-label-md">Review</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold">EK</div>
+<div>
+<p class="font-label-md text-label-md">Ethan Kiprop</p>
+<p class="text-[12px] text-secondary">ID: #ADM-2405</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-label-md">Grade 1</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 bg-error-container/20 text-on-error-container text-[12px] font-bold rounded-full flex items-center w-fit gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="warning">warning</span>
+                                    Missing BC
+                                </span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-2 bg-surface-variant rounded-full overflow-hidden max-w-[100px]">
+<div class="bg-tertiary h-full w-[60%]"></div>
+</div>
+<span class="text-[12px] font-bold">60%</span>
+</div>
+</td>
+<td class="px-lg py-md text-label-md text-secondary">Oct 14, 2023</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline font-label-md text-label-md">Notify Parent</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold">NW</div>
+<div>
+<p class="font-label-md text-label-md">Nia Wambui</p>
+<p class="text-[12px] text-secondary">ID: #ADM-2410</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-label-md">Grade 6</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 bg-surface-variant text-on-surface-variant text-[12px] font-bold rounded-full flex items-center w-fit gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="hourglass_empty">hourglass_empty</span>
+                                    Processing
+                                </span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-2 bg-surface-variant rounded-full overflow-hidden max-w-[100px]">
+<div class="bg-secondary h-full w-[20%]"></div>
+</div>
+<span class="text-[12px] font-bold">20%</span>
+</div>
+</td>
+<td class="px-lg py-md text-label-md text-secondary">Oct 15, 2023</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline font-label-md text-label-md">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<p class="text-label-sm text-secondary">Showing 1-10 of 142 applications</p>
+<div class="flex gap-sm">
+<button class="p-xs border border-outline rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-xs border border-outline rounded bg-primary text-on-primary text-label-sm px-sm">1</button>
+<button class="p-xs border border-outline rounded hover:bg-surface-variant text-label-sm px-sm">2</button>
+<button class="p-xs border border-outline rounded hover:bg-surface-variant text-label-sm px-sm">3</button>
+<button class="p-xs border border-outline rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</section>
+<!-- Quick Actions & Insights (Asymmetric Layout) -->
+<div class="mt-2xl grid grid-cols-1 lg:grid-cols-3 gap-xl">
+<!-- M-Pesa Integration Card -->
+<div class="lg:col-span-1 bg-white p-lg rounded-2xl border border-outline-variant flex flex-col">
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-title-md text-title-md">Admission Fees</h4>
+<img alt="M-Pesa" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChkeaqU1u67ksHR7E7SYQilOIraNKjmojbLppp5M_vWpaZTmb2k5oOGMsfvVDD1R5_6RAEAlGcr3oxvQzzAOiENSVY2LJbGjpGJ5jaju65zOAH5HpYp32AOu_fD3ym4KPRzZ_xcHiB9jvVpqkpt30dxoQToJ8ZoXH9gQeRHRrbLexjfXAVtaVupLgrlRlk0hQ442ZJZ9h7YZdWmgt6ejSMJ7Mgbw4k6pLxB0opo_ShZkiVJJv1nJ40ZdKKhFZPFk3-ElQlwrvKTQbC"/>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant/30 mb-md">
+<p class="text-label-sm text-secondary uppercase tracking-tighter">Total Collected (Oct)</p>
+<p class="text-headline-lg font-bold text-on-surface">KES 452,000</p>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center text-label-md">
+<span class="text-secondary">Pending Transactions</span>
+<span class="font-bold text-error">12</span>
+</div>
+<div class="flex justify-between items-center text-label-md">
+<span class="text-secondary">Auto-reconciled</span>
+<span class="font-bold text-primary">94%</span>
+</div>
+</div>
+<button class="mt-xl w-full bg-on-background text-white py-sm rounded-lg font-label-md hover:bg-primary transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                    Reconcile Payments
+                </button>
+</div>
+<!-- CBE Grade Distribution Chart/Card -->
+<div class="lg:col-span-2 bg-white p-lg rounded-2xl border border-outline-variant relative overflow-hidden group">
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-title-md text-title-md">Capacity vs. Applications</h4>
+<select class="bg-surface border-outline rounded-lg text-label-sm p-1">
+<option>Lower Primary</option>
+<option>Upper Primary</option>
+<option>Junior School</option>
+</select>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<div class="flex flex-col items-center p-md bg-surface-container-low rounded-xl">
+<div class="relative w-16 h-16 mb-sm">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-variant" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="85, 100" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold">85%</span>
+</div>
+<p class="text-label-sm text-secondary">Grade 1</p>
+</div>
+<div class="flex flex-col items-center p-md bg-surface-container-low rounded-xl">
+<div class="relative w-16 h-16 mb-sm">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-variant" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-tertiary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="60, 100" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold">60%</span>
+</div>
+<p class="text-label-sm text-secondary">Grade 2</p>
+</div>
+<div class="flex flex-col items-center p-md bg-surface-container-low rounded-xl">
+<div class="relative w-16 h-16 mb-sm">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-variant" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-primary-container" cx="18" cy="18" fill="none" r="16" stroke-dasharray="98, 100" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold text-error">98%</span>
+</div>
+<p class="text-label-sm text-secondary">Grade 3</p>
+</div>
+<div class="flex flex-col items-center p-md bg-surface-container-low rounded-xl">
+<div class="relative w-16 h-16 mb-sm">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-variant" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-secondary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="45, 100" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold">45%</span>
+</div>
+<p class="text-label-sm text-secondary">Grade 4</p>
+</div>
+</div>
+<div class="mt-xl flex items-center gap-md">
+<div class="p-md rounded-lg bg-primary-container/10 flex-1">
+<div class="flex items-center gap-sm text-primary-container mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-sm font-bold">Admission Tip</span>
+</div>
+<p class="text-[12px] text-on-surface-variant leading-relaxed">Grade 3 is nearly at full capacity. We recommend prioritizing local neighborhood applications for the remaining 2 seats.</p>
+</div>
+<div class="hidden md:block">
+<img alt="Student Success" class="w-24 h-24 object-cover rounded-xl" data-alt="A small group of enthusiastic young Kenyan elementary students in bright green school uniforms, laughing and looking at a tablet together. The background is a brightly lit, modern classroom with posters about CBE competencies. The lighting is optimistic and warm, reinforcing the positive outcomes of a successful enrollment process." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3_c00XTwHc5lumvY0NiwD8rRysXtZRBlKlxPFxUsOgxw75MQHnJALvFoCyvPOHcnBVASchmJcPBZWM1125FYrgyt-baNz9BVkDJJj28QnkV7TpRTWwnLSq2qowy7lx6zCn-5DjhrTxlrv7kbhD_RmWzWFyts4R02PYiwGvH41amyQrhCoA1hoV5wmMrv2qehJcnB7Hrt0QgyxQRFJGIL2lFxyUYBm2Y-rQUMDSrV9_ds9sCPGZt226j-ZW5_kuFCyJzybTtFk2NXB"/>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation (Visible on small screens only) -->
+<nav class="fixed bottom-0 left-0 right-0 h-16 bg-surface shadow-2xl border-t border-outline-variant flex items-center justify-around px-md md:hidden z-50">
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-[10px]">Apps</span>
+</a>
+<button class="bg-primary text-white w-12 h-12 rounded-full -mt-8 shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="text-[10px]">Alerts</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px]">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') e.preventDefault();
+            });
+        });
+
+        // Simple mock for "Enrolled" animation pulse
+        const enrollCard = document.querySelector('.bg-on-primary-fixed-variant');
+        if(enrollCard) {
+            setInterval(() => {
+                enrollCard.classList.add('opacity-90');
+                setTimeout(() => enrollCard.classList.remove('opacity-90'), 150);
+            }, 3000);
+        }
+    </script>
+</body></html>

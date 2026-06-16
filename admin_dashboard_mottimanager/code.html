@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduSmart CBE | Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#0b1c30",
+                    "inverse-primary": "#62df7d",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary-fixed": "#111c2d",
+                    "on-primary-fixed": "#002109",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-primary-fixed-variant": "#005320",
+                    "surface-dim": "#cbdbf5",
+                    "on-surface-variant": "#3e4a3d",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-tint": "#006e2d",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-container": "#fcfcff",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#6e7b6c",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#7ffc97",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#f7fff2",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#89ceff",
+                    "on-error-container": "#93000a",
+                    "primary": "#006b2c",
+                    "on-secondary-container": "#586377",
+                    "on-tertiary-fixed": "#001e2f",
+                    "background": "#f8f9ff",
+                    "tertiary-fixed": "#c9e6ff",
+                    "on-error": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "surface-bright": "#f8f9ff",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-surface": "#0b1c30",
+                    "outline-variant": "#bdcaba",
+                    "inverse-surface": "#213145",
+                    "secondary-container": "#d5e0f8",
+                    "primary-container": "#00873a",
+                    "tertiary": "#00628d",
+                    "secondary": "#545f73",
+                    "tertiary-container": "#007cb1",
+                    "primary-fixed-dim": "#62df7d",
+                    "on-tertiary-fixed-variant": "#004c6e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "3xl": "64px",
+                    "2xl": "48px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-card {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.05);
+        }
+        .mpesa-slot {
+            box-shadow: inset 0px 2px 4px rgba(0,0,0,0.06);
+            background: #f1f5f9;
+        }
+        .progress-step {
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-40 hidden md:flex">
+<div class="px-md py-lg mb-md">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary">EduSmart CBE</h1>
+<p class="text-label-sm font-label-sm text-secondary">Greenwood Academy</p>
+</div>
+<nav class="flex flex-col gap-xs flex-grow">
+<!-- Active State Logic applied to Dashboard -->
+<a class="flex items-center gap-md px-md py-sm bg-primary text-on-primary font-bold rounded-lg scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Student Mgmt</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-md text-label-md">Attendance</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Fees &amp; M-Pesa</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Exams &amp; CBE</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-md text-label-md">Portals</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<div class="mt-md flex items-center gap-md px-sm py-xs bg-surface-container rounded-xl">
+<img alt="Admin Profile" class="w-10 h-10 rounded-full object-cover border-2 border-primary" data-alt="A professional headshot of a school administrator in a clean office setting. The lighting is bright and natural, conveying reliability and expertise. The administrator is wearing a neat button-down shirt, looking directly into the camera with a helpful and welcoming expression. The overall aesthetic is professional, crisp, and high-fidelity to match an enterprise SaaS environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX_HPTtKNAzobXkaxLNkaspYGWbqoU-B6Ber1etcEnJ7agJZB2bYELc5aShwrqPNG6WsjpRqMUfDeB_K_c3whKpC1rNUv-EgIZfugclj-BGzlRnB1y10TMI6gH-AdxtGoFIE-6eVDi9D79do08x1AbCWbTL3ZUoqyk9oKstlb4Hwoaqho9DG9lJtO0CbpO9I9EYAOeYhk7gqsunojpnNlYEACXVAAw9xLIE7_6b0D9-jC1zWiY5E9nAKs-fU-Xf3q8LLEIuXYJpZjX"/>
+<div class="overflow-hidden">
+<p class="text-label-md font-label-md truncate">Samuel Mwangi</p>
+<p class="text-label-sm font-label-sm text-secondary truncate">Principal Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 p-gutter min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Admin Dashboard</h2>
+<p class="text-body-md font-body-md text-secondary">Welcome back, here's what's happening at Greenwood Academy today.</p>
+</div>
+<div class="flex gap-md">
+<button class="bg-white border border-outline text-secondary px-lg py-sm rounded-lg font-label-md text-label-md flex items-center gap-xs hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="print">print</span>
+                    Print Daily Report
+                </button>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md flex items-center gap-xs hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+                    New Registration
+                </button>
+</div>
+</header>
+<!-- Stats Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="tonal-card p-lg rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-xs bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<span class="text-primary font-label-sm text-label-sm">+4% from last term</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-secondary">Total Students</p>
+<h3 class="text-headline-lg font-headline-lg">1,284</h3>
+</div>
+</div>
+<div class="tonal-card p-lg rounded-xl flex flex-col justify-between bg-primary-container/10 border-primary-container/20">
+<div class="flex justify-between items-start mb-md">
+<div class="p-xs bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="text-primary font-label-sm text-label-sm">Live Updates</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-secondary">Fees Collected Today</p>
+<h3 class="text-headline-lg font-headline-lg text-primary">KES 428,500</h3>
+</div>
+</div>
+<div class="tonal-card p-lg rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-xs bg-tertiary-container/20 rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+</div>
+<span class="text-tertiary font-label-sm text-label-sm">Above Average</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-secondary">Attendance Rate</p>
+<h3 class="text-headline-lg font-headline-lg">94.2%</h3>
+</div>
+</div>
+<div class="tonal-card p-lg rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-xs bg-error-container/40 rounded-lg text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<span class="text-error font-label-sm text-label-sm">Action Required</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-secondary">Fee Balances (&gt; 50k)</p>
+<h3 class="text-headline-lg font-headline-lg text-error">42 Cases</h3>
+</div>
+</div>
+</div>
+<!-- Main Analytics & Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Fee Collection Chart Placeholder -->
+<div class="lg:col-span-2 tonal-card p-lg rounded-xl">
+<div class="flex justify-between items-center mb-xl">
+<h4 class="text-title-md font-title-md">Monthly Fee Collection</h4>
+<select class="bg-transparent border-none text-label-md font-label-md text-secondary focus:ring-0">
+<option>Term 2, 2024</option>
+<option>Term 1, 2024</option>
+</select>
+</div>
+<div class="relative h-64 w-full flex items-end gap-md">
+<!-- Simple CSS Bar Chart -->
+<div class="flex-grow flex flex-col items-center gap-sm">
+<div class="w-full bg-surface-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 40%;"></div>
+<span class="text-label-sm font-label-sm text-secondary">Jan</span>
+</div>
+<div class="flex-grow flex flex-col items-center gap-sm">
+<div class="w-full bg-surface-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 65%;"></div>
+<span class="text-label-sm font-label-sm text-secondary">Feb</span>
+</div>
+<div class="flex-grow flex flex-col items-center gap-sm">
+<div class="w-full bg-surface-container rounded-t-lg transition-all hover:bg-primary-container" style="height: 85%;"></div>
+<span class="text-label-sm font-label-sm text-secondary">Mar</span>
+</div>
+<div class="flex-grow flex flex-col items-center gap-sm">
+<div class="w-full bg-primary rounded-t-lg shadow-lg" style="height: 95%;"></div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Apr</span>
+</div>
+<div class="flex-grow flex flex-col items-center gap-sm">
+<div class="w-full bg-surface-container rounded-t-lg" style="height: 20%;"></div>
+<span class="text-label-sm font-label-sm text-secondary">May</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="tonal-card p-lg rounded-xl flex flex-col">
+<h4 class="text-title-md font-title-md mb-xl">Recent Activity</h4>
+<div class="space-y-lg flex-grow">
+<!-- Activity Item 1 -->
+<div class="flex gap-md">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<p class="text-label-md font-label-md">M-Pesa Payment Received</p>
+<p class="text-label-sm font-label-sm text-secondary">Kamau Njoroge (Grade 4B) • KES 15,000</p>
+<span class="text-label-sm font-label-sm text-outline">2 mins ago</span>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-md">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<p class="text-label-md font-label-md">Exam Results Published</p>
+<p class="text-label-sm font-label-sm text-secondary">Mid-Term Competency Assessment: Grade 6</p>
+<span class="text-label-sm font-label-sm text-outline">45 mins ago</span>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-md">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</div>
+<div>
+<p class="text-label-md font-label-md">New Student Registered</p>
+<p class="text-label-sm font-label-sm text-secondary">Sarah Atieno (Grade 1A)</p>
+<span class="text-label-sm font-label-sm text-outline">2 hours ago</span>
+</div>
+</div>
+</div>
+<button class="mt-lg text-primary font-label-md text-label-md hover:underline w-full text-center">View All Logs</button>
+</div>
+<!-- M-Pesa Integrated Fee Status Section -->
+<div class="lg:col-span-3 tonal-card rounded-xl overflow-hidden">
+<div class="p-lg bg-on-background text-white flex justify-between items-center">
+<div>
+<h4 class="text-title-md font-title-md">CBE Mastery &amp; Enrollment</h4>
+<p class="text-label-sm font-label-sm text-surface-variant">Real-time academic performance distribution</p>
+</div>
+<div class="flex gap-sm">
+<span class="px-md py-xs bg-primary rounded-full text-label-sm font-label-sm">Active Term</span>
+</div>
+</div>
+<div class="p-gutter grid grid-cols-1 md:grid-cols-2 gap-xl">
+<!-- CBE Tracker View -->
+<div>
+<div class="flex justify-between items-center mb-md">
+<h5 class="font-label-md text-label-md">Grade 4 Performance Index</h5>
+<span class="text-primary font-bold">88% Mastery</span>
+</div>
+<div class="flex gap-xs w-full mb-lg">
+<div class="progress-step flex-grow bg-primary" title="Exceeding Expectations"></div>
+<div class="progress-step flex-grow bg-primary" title="Meeting Expectations"></div>
+<div class="progress-step flex-grow bg-primary/40" title="Approaching Expectations"></div>
+<div class="progress-step flex-grow bg-surface-container" title="Below Expectations"></div>
+</div>
+<div class="flex justify-between text-label-sm font-label-sm text-secondary">
+<span>Exceeding (45%)</span>
+<span>Meeting (32%)</span>
+<span>Approaching (15%)</span>
+<span>Below (8%)</span>
+</div>
+</div>
+<!-- Payment Slot Visualization -->
+<div class="mpesa-slot p-lg rounded-xl flex items-center justify-between border border-outline-variant">
+<div class="flex items-center gap-lg">
+<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow-sm border border-outline-variant">
+<img alt="M-Pesa Logo Placeholder" class="h-8 object-contain" data-alt="The official M-Pesa green and red brand logo displayed cleanly on a crisp white background. The logo is centered and sharp, emphasizing corporate security and financial integration for a Kenyan SaaS context. The surrounding white space is pristine and minimalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMDkgFaXBbErj6_pF4JqaD_NRedTypaKxY7oQ3c76FjGkfIb6VY09igFzilZsUJvNPCZYTW73zkvSev49u-VEhG1rbCnixhdx9xghmLGvU3gpnw3i2EJYhGrx4nrRysD_eQ0LT-mmSFArQ0RdElS-xmkGijG6eoB2RiyIr-6bIwhnNpcAeLgK7-_brLv_4Mps7dnxHX0kJoUDsse09jIJJH0yH8tyCpuvAni0vaMyWAmnjpk5AFRN0KijvvKBpjQIW9rh-y1iz_ECq"/>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Integrated M-Pesa Ledger</p>
+<p class="text-headline-lg font-headline-lg text-primary">Synced</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-label-sm font-label-sm text-secondary">Last Sync</p>
+<p class="text-label-md font-label-md font-bold">Today, 11:42 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Shell for Mobile -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant flex justify-around p-sm z-50">
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-sm">Dash</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px] font-label-sm">Students</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-[10px] font-label-sm">Fees</span>
+</a>
+<a class="flex flex-col items-center text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-label-sm">CBE</span>
+</a>
+</div>
+</main>
+<!-- FAB for Quick Actions (Dashboard Specific) -->
+<button class="fixed bottom-gutter right-gutter w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform md:bottom-xl md:right-xl z-50">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<script>
+        // Simple Interaction logic for Dashboard
+        document.querySelectorAll('.tonal-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'all 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,168 @@
+1. Super Admin Portal (MottiManager Owner)
+
+This is for you as the platform owner.
+
+Features
+Manage all schools
+Approve/suspend schools
+Subscription management
+Billing management
+School statistics
+User management
+Feature management
+CBE module enable/disable
+Support ticket management
+System settings
+Audit logs
+Platform analytics
+Database backups
+2. School Admin / Principal Portal
+
+This is the main school dashboard.
+
+Features
+School profile management
+School branding (logo, favicon, colors)
+Academic year management
+Term management
+User management
+Class and stream management
+Subject management
+Teacher assignment
+Student management
+Attendance monitoring
+Examination management
+Reports and analytics
+Communication center
+School settings
+3. Bursar / Finance Portal
+
+Focused on school finances.
+
+Features
+Fee structure setup
+Student fee invoices
+M-Pesa payment tracking
+Receipt generation
+Fee balances
+Fee statements
+Financial reports
+Income reports
+Expense management
+Budget management
+Outstanding balances
+Payment reminders
+Export reports
+4. Teacher Portal
+
+Used daily by teachers.
+
+Features
+Dashboard overview
+My classes
+My subjects
+Attendance marking
+Enter exam marks
+Create assignments
+Grade assignments
+Student performance tracking
+Report comments
+Announcements
+Timetable view
+Learning materials upload
+Optional CBE Features
+Competency assessments
+Rubric assessments
+Learner portfolios
+Project assessments
+CBE reports
+5. Class Teacher Portal
+
+Additional responsibilities beyond normal teachers.
+
+Features
+Class attendance
+Student discipline records
+Student profiles
+Parent communication
+Class performance analysis
+Report generation
+Class announcements
+6. Parent Portal
+
+One of the most important portals.
+
+Features
+View student profile
+View attendance
+View exam results
+Download report cards
+View fee balances
+View fee statements
+View payment history
+School announcements
+Teacher communication
+Timetable access
+Assignment tracking
+Notifications
+CBE Schools
+Competency reports
+Learner portfolio access
+Project progress
+7. Student Portal
+
+For learners.
+
+Features
+Personal profile
+Timetable
+Attendance records
+Exam results
+Assignments
+Learning materials
+Announcements
+School calendar
+Report cards
+Performance analytics
+CBE Schools
+Competency reports
+Portfolio access
+Project submissions
+8. Admissions Portal
+
+For admissions officers.
+
+Features
+Online applications
+Student registration
+Admission approvals
+Document uploads
+Admission letters
+Enrollment reports
+9. Receptionist Portal
+
+Front office management.
+
+Features
+Visitor management
+Student lookup
+Parent lookup
+Communication center
+Appointment scheduling
+Student check-in/check-out
+10. Librarian Portal (Optional Module)
+Features
+Book catalog
+Book issuance
+Book returns
+Fine management
+Library reports
+Student borrowing history
+11. Transport Manager Portal (Optional Module)
+Features
+Vehicle management
+Route management
+Driver management
+Student transport allocation
+Transport fee tracking
+Route reports
