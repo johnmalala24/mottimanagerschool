@@ -1,4 +1,5 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/admissions/page": "app/admissions/page.js",
   "/finance/page": "app/finance/page.js",
   "/librarian/page": "app/librarian/page.js",

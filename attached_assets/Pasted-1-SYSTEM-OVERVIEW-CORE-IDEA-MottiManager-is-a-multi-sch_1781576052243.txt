@@ -1,0 +1,196 @@
+1. SYSTEM OVERVIEW (CORE IDEA)
+
+MottiManager is a multi-school SaaS system:
+
+One platform
+Many schools
+Each school is fully isolated (data + branding + users)
+Each school can optionally enable CBE
+🏫 2. SCHOOL ONBOARDING FLOW
+Step 1: School Registration (Super Admin or Self Signup)
+
+School creates account:
+
+School name
+Location
+Type (Primary / Secondary)
+Admin email & phone
+Step 2: Setup Wizard
+
+System asks:
+
+Enable CBE? (Yes / No)
+Academic structure (CBC / 8-4-4 / Mixed)
+Number of classes
+Terms per year
+Step 3: Branding Setup
+Upload logo
+Choose theme color (optional override)
+Set school profile
+Step 4: System Ready
+
+School dashboard is generated automatically.
+
+👥 3. USER ROLE FLOW
+
+Each user logs in and is routed to their portal:
+
+Role	Redirect
+Super Admin	Platform dashboard
+Principal	School admin dashboard
+Teacher	Teacher portal
+Bursar	Finance portal
+Parent	Parent portal
+Student	Student portal
+
+Role decides:
+
+What they see
+What they can do
+🏛️ 4. SCHOOL ADMIN FLOW (MAIN CONTROL CENTER)
+
+The principal/admin:
+
+Setup Phase
+Create academic year
+Create terms
+Create classes & streams
+Assign subjects
+Add teachers
+Operational Phase
+Monitor attendance
+View exams
+Manage students
+Approve fee structures
+Send announcements
+🎓 5. STUDENT LIFECYCLE FLOW
+Admission
+Student is registered
+Assigned admission number
+Placed in class
+Active Learning
+Attendance tracked daily
+Exams entered by teachers
+Assignments submitted
+Promotion
+End of year:
+Promote student OR repeat class
+💰 6. FEES FLOW (BURSAR SYSTEM)
+Step 1: Fee Setup
+Admin defines fee structure per class
+Step 2: Invoice Generation
+System generates fee invoices per student
+Step 3: Payment
+Parent pays via M-Pesa
+System uses STK Push / Paybill tracking
+Step 4: Auto Reconciliation
+Payment automatically:
+Updates student balance
+Generates receipt
+Updates reports
+📊 7. ACADEMIC FLOW (EXAMS + REPORTS)
+Step 1: Exam Setup
+Teacher creates exam
+Selects class + subject
+Step 2: Marks Entry
+Teacher enters marks OR rubric scores
+Step 3: Processing
+
+System calculates:
+
+Totals
+Averages
+Grades
+Rank (optional)
+Step 4: Report Card Generation
+PDF report generated
+Sent to parent portal
+Downloadable
+📡 8. COMMUNICATION FLOW
+
+System automatically sends:
+
+Fee reminders → Parent
+Exam results → Parent
+Attendance alerts → Parent
+Announcements → SMS / WhatsApp
+
+Trigger types:
+
+Manual (admin sends)
+Automatic (system triggers)
+🧑‍🏫 9. TEACHER WORKFLOW
+
+Teachers:
+
+Log in
+See assigned classes
+Mark attendance daily
+Enter marks
+Upload assignments
+Add report comments
+(If CBE enabled → assess competencies)
+👨‍👩‍👧 10. PARENT FLOW
+
+Parents:
+
+Login to portal
+View:
+Fees balance
+Payments
+Attendance
+Results
+Download report cards
+Receive notifications
+🧠 11. CBE FLOW (ONLY IF ENABLED)
+Step 1: Setup (Admin)
+Define learning areas
+Define strands & sub-strands
+Define competencies
+Step 2: Teacher Assessment
+
+Instead of marks:
+
+Teacher selects:
+EE / ME / AE / BE
+Step 3: Evidence Upload
+Photos
+Projects
+Videos
+Step 4: Portfolio Building
+Each student builds learning portfolio over time
+Step 5: Report Generation
+Competency-based report is generated instead of marks
+🔁 12. SYSTEM DATA FLOW (SIMPLIFIED)
+Teacher → Inputs marks/attendance → System processes → Database updates → Parent sees results
+Parent → Pays fees (M-Pesa) → System confirms → Bursar dashboard updates → Receipt generated
+Admin → Sets rules → System applies rules → All portals update automatically
+🧩 13. FEATURE TOGGLE SYSTEM (VERY IMPORTANT)
+
+Every school has settings:
+
+{
+  cbeEnabled: true/false,
+  smsEnabled: true/false,
+  transportEnabled: true/false
+}
+
+System behavior:
+
+If OFF → feature hidden completely
+If ON → feature appears in menu + workflows
+🚀 14. CORE PRINCIPLE (HOW YOUR SYSTEM SHOULD THINK)
+
+MottiManager should follow:
+
+1. “Simple first”
+
+Only show what the user needs.
+
+2. “Role-based UI”
+
+Every user sees different system.
+
+3. “Automation-first”
+
+Reduce manual work (fees, reports, SMS).
