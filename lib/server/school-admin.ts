@@ -237,6 +237,10 @@ export type SchoolSettingsUpdate = {
 export async function updateSchoolSettings(schoolId: string, data: SchoolSettingsUpdate) {
   const { logo, ...settingsData } = data;
 
+  if (logo && logo.startsWith("data:") && logo.length > 700_000) {
+    throw new Error("Logo file is too large. Please use an image under 512 KB.");
+  }
+
   return prisma.$transaction(async (tx) => {
     if (logo !== undefined) {
       await tx.school.update({

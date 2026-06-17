@@ -37,8 +37,8 @@ export default function PortalShell({
         userRole={userRole}
         branding={branding}
       />
-      <main className="ml-0 md:ml-64 flex-1 flex flex-col min-h-screen pb-16 md:pb-0">
-        {children}
+      <main className="ml-0 md:ml-64 flex-1 flex flex-col min-h-screen pb-16 md:pb-0 bg-surface">
+        <div className="flex-1 px-gutter pb-gutter">{children}</div>
       </main>
     </div>
   )

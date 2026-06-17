@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import ColorSelect from "@/components/portal/ColorSelect";
+import LogoUploadField from "@/components/portal/LogoUploadField";
+import { THEME_COLOR_PRESETS } from "@/lib/theme-colors";
 
 type Step = "branding" | "academic" | "classes" | "subjects" | "modules";
 
@@ -26,7 +29,8 @@ export default function SchoolSetupWizard() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [themeColor, setThemeColor] = useState("#006b2c");
+  const [themeColor, setThemeColor] = useState(THEME_COLOR_PRESETS[0].value);
+  const [logo, setLogo] = useState<string | null>(null);
   const [motto, setMotto] = useState("");
   const [yearName, setYearName] = useState(String(new Date().getFullYear()));
   const [yearStart, setYearStart] = useState(`${new Date().getFullYear()}-01-08`);
@@ -55,6 +59,7 @@ export default function SchoolSetupWizard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           themeColor,
+          logo,
           motto: motto || undefined,
           academicYearName: yearName,
           academicYearStart: yearStart,
@@ -109,10 +114,13 @@ export default function SchoolSetupWizard() {
               <h1 className="text-xl font-extrabold mb-1">School Branding</h1>
               <p className="text-sm text-[#545f73] mb-6">Customize how your school appears in the system.</p>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold mb-1.5">Theme Color</label>
-                  <input type="color" value={themeColor} onChange={(e) => setThemeColor(e.target.value)} className="h-10 w-full rounded-lg cursor-pointer" />
-                </div>
+                <LogoUploadField value={logo} onChange={setLogo} />
+                <ColorSelect
+                  label="Theme Color"
+                  value={themeColor}
+                  onChange={setThemeColor}
+                  hint="Choose the primary color for your school portal."
+                />
                 <div>
                   <label className="block text-sm font-semibold mb-1.5">School Motto (optional)</label>
                   <input value={motto} onChange={(e) => setMotto(e.target.value)} className="input-premium" placeholder="Excellence in Education" />

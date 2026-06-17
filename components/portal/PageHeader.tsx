@@ -6,12 +6,12 @@ type PageHeaderProps = {
 
 export default function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
   return (
-    <div className="sticky top-0 z-10 bg-surface-container-lowest border-b border-outline-variant px-lg py-md flex items-center justify-between gap-md">
+    <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl pt-lg">
       <div>
-        <h1 className="text-headline-sm font-bold text-on-surface">{title}</h1>
-        {subtitle && <p className="text-body-md text-secondary">{subtitle}</p>}
+        <h1 className="text-headline-lg font-bold text-on-background">{title}</h1>
+        {subtitle && <p className="text-body-md text-secondary mt-1">{subtitle}</p>}
       </div>
       {actions && <div className="flex gap-sm flex-shrink-0">{actions}</div>}
-    </div>
+    </header>
   );
 }

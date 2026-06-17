@@ -41,13 +41,15 @@ export default async function SchoolAdminDashboardPage() {
         title="Admin Dashboard"
         subtitle={`Welcome back — ${data.schoolName} overview for today.`}
       />
-      <div className="p-lg flex flex-col gap-lg">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-md">
+      <div className="flex flex-col gap-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
           <PortalStatCard
             label="Total Students"
             value={String(data.totalStudents)}
             sub={`${data.totalClasses} classes · ${data.totalTeachers} teachers`}
             icon="groups"
+            badge="+ Active"
+            badgeVariant="success"
           />
           <PortalStatCard
             label="Fees Collected Today"
@@ -55,13 +57,16 @@ export default async function SchoolAdminDashboardPage() {
             sub="From fee payments"
             icon="payments"
             badge="Live"
-            badgeVariant="info"
+            badgeVariant="success"
+            highlight
           />
           <PortalStatCard
             label="Attendance Rate"
             value={`${data.attendanceRate}%`}
             sub="Today's marked attendance"
             icon="fact_check"
+            badge="Today"
+            badgeVariant="info"
           />
           <PortalStatCard
             label="Fee Alerts"
@@ -69,7 +74,7 @@ export default async function SchoolAdminDashboardPage() {
             sub="Overdue or partial invoices"
             icon="warning"
             badgeVariant={data.overdueInvoices > 0 ? "error" : "success"}
-            badge={data.overdueInvoices > 0 ? "Action" : "OK"}
+            badge={data.overdueInvoices > 0 ? "Action Required" : "OK"}
           />
         </div>
 

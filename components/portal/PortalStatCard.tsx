@@ -7,14 +7,23 @@ type StatCardProps = {
   icon: string;
   badge?: string;
   badgeVariant?: "success" | "warning" | "error" | "info" | "neutral";
+  highlight?: boolean;
 };
 
 const badgeClasses = {
-  success: "text-primary bg-primary/10",
-  warning: "text-yellow-700 bg-yellow-100",
-  error: "text-error bg-error/10",
-  info: "text-tertiary bg-tertiary/10",
-  neutral: "text-secondary bg-surface-container",
+  success: "text-primary",
+  warning: "text-yellow-700",
+  error: "text-error",
+  info: "text-tertiary",
+  neutral: "text-secondary",
+};
+
+const iconBgClasses = {
+  success: "bg-primary/10 text-primary",
+  warning: "bg-yellow-100 text-yellow-700",
+  error: "bg-error-container/40 text-error",
+  info: "bg-tertiary-container/20 text-tertiary",
+  neutral: "bg-surface-container text-secondary",
 };
 
 export default function PortalStatCard({
@@ -24,27 +33,37 @@ export default function PortalStatCard({
   icon,
   badge,
   badgeVariant = "neutral",
+  highlight = false,
 }: StatCardProps) {
   return (
-    <div className="tonal-card rounded-xl p-md">
-      <div className="flex items-start justify-between mb-sm">
-        <div className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
-          <span className="material-symbols-outlined text-primary">{icon}</span>
+    <div
+      className={clsx(
+        "tonal-card rounded-xl p-lg flex flex-col justify-between min-h-[140px]",
+        highlight && "bg-primary-container/10 border-primary-container/20"
+      )}
+    >
+      <div className="flex justify-between items-start mb-md">
+        <div className={clsx("p-xs rounded-lg", iconBgClasses[badgeVariant])}>
+          <span className="material-symbols-outlined text-[22px]">{icon}</span>
         </div>
         {badge && (
-          <span
-            className={clsx(
-              "text-label-sm font-bold px-sm py-xs rounded-full",
-              badgeClasses[badgeVariant]
-            )}
-          >
+          <span className={clsx("text-label-sm font-bold", badgeClasses[badgeVariant])}>
             {badge}
           </span>
         )}
       </div>
-      <p className="text-body-sm text-secondary mb-xs">{label}</p>
-      <p className="text-headline-sm font-bold text-on-surface">{value}</p>
-      {sub && <p className="text-label-sm text-secondary mt-xs">{sub}</p>}
+      <div>
+        <p className="text-label-md text-secondary mb-xs">{label}</p>
+        <p
+          className={clsx(
+            "text-headline-lg font-bold leading-tight",
+            badgeVariant === "error" ? "text-error" : highlight ? "text-primary" : "text-on-surface"
+          )}
+        >
+          {value}
+        </p>
+        {sub && <p className="text-label-sm text-secondary mt-xs">{sub}</p>}
+      </div>
     </div>
   );
 }

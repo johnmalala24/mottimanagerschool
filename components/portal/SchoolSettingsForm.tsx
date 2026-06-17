@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { TOGGLEABLE_PORTAL_ROLES } from "@/lib/roles";
 import type { UserRole } from "@prisma/client";
+import ColorSelect from "@/components/portal/ColorSelect";
+import LogoUploadField from "@/components/portal/LogoUploadField";
+import { ACCENT_COLOR_PRESETS, BACKGROUND_COLOR_PRESETS, THEME_COLOR_PRESETS } from "@/lib/theme-colors";
 
 type SettingsData = {
   themeColor: string;
@@ -80,54 +83,24 @@ export default function SchoolSettingsForm({ initial }: SchoolSettingsFormProps)
         <h3 className="text-title-md font-bold mb-1">Branding & Appearance</h3>
         <p className="text-label-sm text-secondary mb-md">Customize how your school portal looks for all users.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
-          <label className="flex flex-col gap-1">
-            <span className="text-label-sm font-semibold">Primary Theme Color</span>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={form.themeColor}
-                onChange={(e) => setForm({ ...form, themeColor: e.target.value })}
-                className="w-12 h-10 rounded-lg border border-outline-variant cursor-pointer"
-              />
-              <input
-                className="input-premium flex-1"
-                value={form.themeColor}
-                onChange={(e) => setForm({ ...form, themeColor: e.target.value })}
-              />
-            </div>
-          </label>
-          <label className="flex flex-col gap-1">
-            <span className="text-label-sm font-semibold">Accent Color</span>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={form.accentColor}
-                onChange={(e) => setForm({ ...form, accentColor: e.target.value })}
-                className="w-12 h-10 rounded-lg border border-outline-variant cursor-pointer"
-              />
-              <input
-                className="input-premium flex-1"
-                value={form.accentColor}
-                onChange={(e) => setForm({ ...form, accentColor: e.target.value })}
-              />
-            </div>
-          </label>
-          <label className="flex flex-col gap-1">
-            <span className="text-label-sm font-semibold">Dashboard Background</span>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={form.dashboardBgColor}
-                onChange={(e) => setForm({ ...form, dashboardBgColor: e.target.value })}
-                className="w-12 h-10 rounded-lg border border-outline-variant cursor-pointer"
-              />
-              <input
-                className="input-premium flex-1"
-                value={form.dashboardBgColor}
-                onChange={(e) => setForm({ ...form, dashboardBgColor: e.target.value })}
-              />
-            </div>
-          </label>
+          <ColorSelect
+            label="Primary Theme Color"
+            value={form.themeColor}
+            onChange={(themeColor) => setForm({ ...form, themeColor })}
+            presets={THEME_COLOR_PRESETS}
+          />
+          <ColorSelect
+            label="Accent Color"
+            value={form.accentColor}
+            onChange={(accentColor) => setForm({ ...form, accentColor })}
+            presets={ACCENT_COLOR_PRESETS}
+          />
+          <ColorSelect
+            label="Dashboard Background"
+            value={form.dashboardBgColor}
+            onChange={(dashboardBgColor) => setForm({ ...form, dashboardBgColor })}
+            presets={BACKGROUND_COLOR_PRESETS}
+          />
           <label className="flex flex-col gap-1">
             <span className="text-label-sm font-semibold">School Motto</span>
             <input
@@ -137,15 +110,12 @@ export default function SchoolSettingsForm({ initial }: SchoolSettingsFormProps)
               onChange={(e) => setForm({ ...form, motto: e.target.value || null })}
             />
           </label>
-          <label className="flex flex-col gap-1">
-            <span className="text-label-sm font-semibold">Logo URL</span>
-            <input
-              className="input-premium"
-              placeholder="https://yourschool.ac.ke/logo.png"
-              value={form.logo ?? ""}
-              onChange={(e) => setForm({ ...form, logo: e.target.value || null })}
+          <div className="md:col-span-2">
+            <LogoUploadField
+              value={form.logo}
+              onChange={(logo) => setForm({ ...form, logo })}
             />
-          </label>
+          </div>
           <label className="flex flex-col gap-1">
             <span className="text-label-sm font-semibold">Favicon URL</span>
             <input

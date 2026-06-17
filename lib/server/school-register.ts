@@ -292,10 +292,18 @@ export async function admitStudent(
   });
 }
 
+function assertLogoSize(logo: string | undefined) {
+  if (!logo) return;
+  if (logo.startsWith("data:") && logo.length > 700_000) {
+    throw new Error("Logo file is too large. Please use an image under 512 KB.");
+  }
+}
+
 export async function completeSchoolSetup(
   schoolId: string,
   data: {
     themeColor?: string;
+    logo?: string | null;
     motto?: string;
     cbeEnabled?: boolean;
     smsEnabled?: boolean;
@@ -312,10 +320,19 @@ export async function completeSchoolSetup(
     subjects?: { name: string; code: string }[];
   }
 ) {
+  assertLogoSize(data.logo ?? undefined);
+
   const yearName =
     data.academicYearName ?? String(new Date().getFullYear());
 
   await prisma.$transaction(async (tx) => {
+    if (data.logo !== undefined) {
+      await tx.school.update({
+        where: { id: schoolId },
+        data: { logo: data.logo || null },
+      });
+    }
+
     await tx.schoolSettings.update({
       where: { schoolId },
       data: {
