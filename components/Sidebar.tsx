@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
 import type { SchoolBranding } from '@/lib/school-branding'
@@ -80,6 +81,14 @@ export default function Sidebar({ title, subtitle, navItems, userName = 'Admin U
               <span>{item.label}</span>
             </Link>
           ))}
+          <button
+            type="button"
+            onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+            className="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg text-label-md w-full text-left"
+          >
+            <span className="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
           <div className="flex items-center gap-md px-md py-md mt-sm bg-surface-container rounded-xl">
             <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm flex-shrink-0">
               {userName.split(' ').map(n => n[0]).join('').slice(0, 2)}
