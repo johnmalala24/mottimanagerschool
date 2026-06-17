@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
+import type { SchoolBranding } from '@/lib/school-branding'
 
 interface NavItem {
   label: string
@@ -16,10 +17,12 @@ interface SidebarProps {
   userName?: string
   userRole?: string
   bottomItems?: NavItem[]
+  branding?: Pick<SchoolBranding, 'logo' | 'motto' | 'themeColor'>
 }
 
-export default function Sidebar({ title, subtitle, navItems, userName = 'Admin User', userRole = 'Administrator', bottomItems = [] }: SidebarProps) {
+export default function Sidebar({ title, subtitle, navItems, userName = 'Admin User', userRole = 'Administrator', bottomItems = [], branding }: SidebarProps) {
   const pathname = usePathname()
+  const logo = branding?.logo
 
   return (
     <>
@@ -27,12 +30,20 @@ export default function Sidebar({ title, subtitle, navItems, userName = 'Admin U
       <aside className="fixed left-0 top-0 h-screen flex flex-col p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-40 hidden md:flex">
         <div className="px-md py-lg mb-md">
           <div className="flex items-center gap-sm">
-            <div className="w-10 h-10 bg-primary-container flex items-center justify-center rounded-lg text-on-primary-container">
-              <span className="material-symbols-outlined icon-filled">school</span>
+            <div
+              className="w-10 h-10 bg-primary-container flex items-center justify-center rounded-lg text-on-primary-container overflow-hidden flex-shrink-0"
+              style={branding?.themeColor ? { backgroundColor: branding.themeColor } : undefined}
+            >
+              {logo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={logo} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <span className="material-symbols-outlined icon-filled text-white">school</span>
+              )}
             </div>
-            <div>
-              <h1 className="text-headline-lg-mobile font-bold text-primary leading-tight">{title}</h1>
-              <p className="text-label-sm text-secondary opacity-80">{subtitle}</p>
+            <div className="min-w-0">
+              <h1 className="text-headline-lg-mobile font-bold text-primary leading-tight truncate">{title}</h1>
+              <p className="text-label-sm text-secondary opacity-80 truncate">{subtitle}</p>
             </div>
           </div>
         </div>
