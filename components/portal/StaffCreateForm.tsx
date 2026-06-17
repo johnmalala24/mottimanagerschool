@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import ProfilePhotoUpload from "@/components/portal/ProfilePhotoUpload";
 import { STAFF_CREATABLE_ROLES } from "@/lib/roles";
 import type { UserRole } from "@prisma/client";
 
 export default function StaffCreateForm() {
+  const router = useRouter();
   const [availableRoles, setAvailableRoles] = useState(STAFF_CREATABLE_ROLES);
   const [form, setForm] = useState({
     name: "",
@@ -13,6 +16,7 @@ export default function StaffCreateForm() {
     role: "TEACHER",
     isClassTeacher: false,
   });
+  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -25,9 +29,6 @@ export default function StaffCreateForm() {
         const disabled: UserRole[] = data.settings?.disabledRoles ?? [];
         const roles = STAFF_CREATABLE_ROLES.filter((r) => !disabled.includes(r.value));
         setAvailableRoles(roles);
-        if (roles.length > 0 && disabled.includes(form.role as UserRole)) {
-          setForm((prev) => ({ ...prev, role: roles[0].value }));
-        }
       })
       .catch(() => {});
   }, []);
@@ -42,7 +43,7 @@ export default function StaffCreateForm() {
       const res = await fetch("/api/school/staff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, image }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -52,6 +53,8 @@ export default function StaffCreateForm() {
       setSuccess(`Created ${data.user.name} (${data.user.role})`);
       if (data.temporaryPassword) setTempPassword(data.temporaryPassword);
       setForm({ name: "", email: "", phone: "", role: "TEACHER", isClassTeacher: false });
+      setImage(null);
+      router.refresh();
     } catch {
       setError("Something went wrong");
     } finally {
@@ -73,6 +76,9 @@ export default function StaffCreateForm() {
               Temporary password: <strong>{tempPassword}</strong> — share securely with the staff member.
             </p>
           )}
+          <div className="md:col-span-2">
+            <ProfilePhotoUpload value={image} onChange={setImage} label="Staff photo (optional)" />
+          </div>
           <input className="input-premium" placeholder="Full name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
           <input className="input-premium" type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           <input className="input-premium" placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />

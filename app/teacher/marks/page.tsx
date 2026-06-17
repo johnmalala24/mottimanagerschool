@@ -1,7 +1,9 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
+import { EnterGradeForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
 import { getTeacherRecord, getTeacherGrades } from "@/lib/server/teacher";
+import { prisma } from "@/lib/prisma";
 
 export default async function TeacherMarksPage() {
   const { schoolId } = await getSchoolContext();
@@ -14,11 +16,33 @@ export default async function TeacherMarksPage() {
       </>
     );
   }
-  const grades = await getTeacherGrades(schoolId, teacher.id);
+
+  const [grades, classes, subjects, students] = await Promise.all([
+    getTeacherGrades(schoolId, teacher.id),
+    prisma.class.findMany({
+      where: { schoolId, classTeacherId: teacher.id },
+      select: { id: true, name: true, section: true },
+    }),
+    prisma.subject.findMany({ where: { schoolId }, select: { id: true, name: true } }),
+    prisma.student.findMany({
+      where: { schoolId, status: "ACTIVE" },
+      include: { user: { select: { name: true } } },
+    }),
+  ]);
+
   return (
     <>
-      <PageHeader title="Exam Marks" subtitle="Marks for your classes." />
+      <PageHeader title="Exam Marks" subtitle="Enter and view marks for your classes." />
       <div className="p-lg">
+        <EnterGradeForm
+          classes={classes}
+          subjects={subjects}
+          students={students.map((s) => ({
+            id: s.id,
+            name: s.user.name ?? "Student",
+            classId: s.classId,
+          }))}
+        />
         {grades.length === 0 ? (
           <EmptyState icon="grade" title="No marks entered" />
         ) : (

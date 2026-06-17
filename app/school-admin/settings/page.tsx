@@ -1,6 +1,7 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
 import SchoolSettingsForm from "@/components/portal/SchoolSettingsForm";
+import UserProfileSettings from "@/components/portal/UserProfileSettings";
 import { getSchoolContext } from "@/lib/server/context";
 import { getSchoolAcademicYears, getSchoolSettings } from "@/lib/server/school-admin";
 import { formatDate } from "@/lib/format";
@@ -48,6 +49,7 @@ export default async function SchoolAdminSettingsPage() {
         subtitle="Customize branding, portal roles, and feature modules for your school."
       />
       <div className="p-lg flex flex-col gap-lg">
+        <UserProfileSettings />
         {formInitial ? (
           <SchoolSettingsForm initial={formInitial} />
         ) : (

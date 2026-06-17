@@ -30,6 +30,7 @@ export default async function SchoolPortalLayout({
         bottomItems={bottomItems}
         userName={user?.name ?? "User"}
         userRole={userRole}
+        userImage={(user as { image?: string | null })?.image ?? null}
         branding={theme}
       >
         {children}

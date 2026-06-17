@@ -55,12 +55,30 @@ export async function getSchoolContext() {
     return { user, school: null, schoolId: null, branding: null as SchoolBranding | null };
   }
 
-  const school = await prisma.school.findUnique({
-    where: { id: schoolId },
-    select: { id: true, name: true, logo: true },
-  });
+  const [school, dbUser] = await Promise.all([
+    prisma.school.findUnique({
+      where: { id: schoolId },
+      select: { id: true, name: true, logo: true },
+    }),
+    user?.id
+      ? prisma.user.findUnique({
+          where: { id: user.id },
+          select: { image: true, name: true, email: true, phone: true },
+        })
+      : null,
+  ]);
 
   const branding = await getSchoolBranding(schoolId);
 
-  return { user, school, schoolId, branding };
+  const enrichedUser = user
+    ? {
+        ...user,
+        name: dbUser?.name ?? user.name,
+        image: dbUser?.image ?? user.image ?? null,
+        email: dbUser?.email ?? user.email,
+        phone: dbUser?.phone ?? null,
+      }
+    : user;
+
+  return { user: enrichedUser, school, schoolId, branding };
 }

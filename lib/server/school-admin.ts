@@ -85,7 +85,7 @@ export async function getSchoolStudents(schoolId: string) {
   return prisma.student.findMany({
     where: { schoolId },
     include: {
-      user: { select: { name: true } },
+      user: { select: { name: true, image: true } },
       class: { select: { name: true, section: true } },
       parent: { include: { user: { select: { name: true, phone: true } } } },
       feeInvoices: {

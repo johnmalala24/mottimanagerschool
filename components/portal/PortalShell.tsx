@@ -12,6 +12,7 @@ type PortalShellProps = {
   bottomItems?: NavItem[]
   userName?: string
   userRole?: string
+  userImage?: string | null
   branding?: SchoolBranding
   children: React.ReactNode
 }
@@ -23,6 +24,7 @@ export default function PortalShell({
   bottomItems = [],
   userName = 'User',
   userRole = 'Member',
+  userImage,
   branding,
   children,
 }: PortalShellProps) {
@@ -35,6 +37,7 @@ export default function PortalShell({
         bottomItems={bottomItems}
         userName={userName}
         userRole={userRole}
+        userImage={userImage}
         branding={branding}
       />
       <main className="ml-0 md:ml-64 flex-1 flex flex-col min-h-screen pb-16 md:pb-0 bg-surface">

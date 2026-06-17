@@ -17,11 +17,12 @@ interface SidebarProps {
   navItems: NavItem[]
   userName?: string
   userRole?: string
+  userImage?: string | null
   bottomItems?: NavItem[]
   branding?: Pick<SchoolBranding, 'logo' | 'motto' | 'themeColor'>
 }
 
-export default function Sidebar({ title, subtitle, navItems, userName = 'Admin User', userRole = 'Administrator', bottomItems = [], branding }: SidebarProps) {
+export default function Sidebar({ title, subtitle, navItems, userName = 'Admin User', userRole = 'Administrator', userImage, bottomItems = [], branding }: SidebarProps) {
   const pathname = usePathname()
   const logo = branding?.logo
 
@@ -90,8 +91,13 @@ export default function Sidebar({ title, subtitle, navItems, userName = 'Admin U
             <span>Logout</span>
           </button>
           <div className="flex items-center gap-md px-md py-md mt-sm bg-surface-container rounded-xl">
-            <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm flex-shrink-0">
-              {userName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+            <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-sm flex-shrink-0 overflow-hidden">
+              {userImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={userImage} alt="" className="w-full h-full object-cover" />
+              ) : (
+                userName.split(' ').map(n => n[0]).join('').slice(0, 2)
+              )}
             </div>
             <div className="flex-1 overflow-hidden">
               <p className="text-label-md font-medium truncate">{userName}</p>

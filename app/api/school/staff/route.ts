@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   try {
     const user = await requireSchoolAdmin();
     const body = await request.json();
-    const { name, email, phone, role, password, isClassTeacher } = body;
+    const { name, email, phone, role, password, isClassTeacher, image } = body;
 
     if (!name || !email || !role) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       role: role as UserRole,
       password,
       isClassTeacher,
+      image,
     });
 
     return NextResponse.json(

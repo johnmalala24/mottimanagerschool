@@ -15,6 +15,8 @@ export async function POST(request: NextRequest) {
       guardianEmail,
       guardianPhone,
       relationship,
+      studentImage,
+      parentImage,
     } = body;
 
     if (!fullName || !classId || !guardianName || !guardianEmail) {
@@ -30,6 +32,8 @@ export async function POST(request: NextRequest) {
       guardianEmail,
       guardianPhone,
       relationship,
+      studentImage,
+      parentImage,
     });
 
     return NextResponse.json(

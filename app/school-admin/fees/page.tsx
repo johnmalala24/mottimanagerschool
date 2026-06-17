@@ -1,8 +1,10 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
+import { FinanceActionForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
 import { getSchoolFeeData } from "@/lib/server/school-admin";
+import { prisma } from "@/lib/prisma";
 import { formatDate, formatKES } from "@/lib/format";
 
 export default async function SchoolAdminFeesPage() {
@@ -17,11 +19,24 @@ export default async function SchoolAdminFeesPage() {
   }
 
   const { structures, payments, invoices, mpesa } = await getSchoolFeeData(schoolId);
+  const students = await prisma.student.findMany({
+    where: { schoolId, status: "ACTIVE" },
+    include: { user: { select: { name: true } } },
+  });
 
   return (
     <>
       <PageHeader title="Fees & M-Pesa" subtitle="Fee structures, payments, and M-Pesa transactions." />
       <div className="p-lg flex flex-col gap-lg">
+        <FinanceActionForm
+          students={students.map((s) => ({ id: s.id, name: s.user.name ?? "Student" }))}
+          invoices={invoices.map((i) => ({
+            id: i.id,
+            invoiceNumber: i.invoiceNumber,
+            studentId: i.studentId,
+            balance: i.balance,
+          }))}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg">
           <div className="tonal-card rounded-xl p-lg">
             <h3 className="text-title-md font-bold mb-md">Fee Structures</h3>

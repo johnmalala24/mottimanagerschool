@@ -1,6 +1,7 @@
 import EmptyState from "@/components/portal/EmptyState";
 import PortalStatCard from "@/components/portal/PortalStatCard";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
+import UserProfileSettings from "@/components/portal/UserProfileSettings";
 import { formatDate, formatKES } from "@/lib/format";
 import { prisma } from "@/lib/prisma";
 import { getParentChildData, getParentRecord } from "@/lib/server/parent";
@@ -111,7 +112,12 @@ export default async function PortalList({ portal, page, schoolId }: PortalListP
     }
 
     if (page === "settings" || page === "support") {
-      return <SupportBlock page={page} />;
+      return (
+        <div className="space-y-lg">
+          <UserProfileSettings />
+          {page === "support" ? <SupportBlock page={page} /> : null}
+        </div>
+      );
     }
   }
 

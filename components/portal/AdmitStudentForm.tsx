@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ProfilePhotoUpload from "@/components/portal/ProfilePhotoUpload";
 
 type ClassOption = { id: string; name: string; section: string };
 
 export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }) {
+  const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -15,6 +18,8 @@ export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }
     guardianPhone: "",
     relationship: "Guardian",
   });
+  const [studentImage, setStudentImage] = useState<string | null>(null);
+  const [parentImage, setParentImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<Record<string, string> | null>(null);
@@ -28,7 +33,7 @@ export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }
       const res = await fetch("/api/school/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, studentImage, parentImage }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -46,6 +51,9 @@ export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }
         guardianPhone: "",
         relationship: "Guardian",
       });
+      setStudentImage(null);
+      setParentImage(null);
+      router.refresh();
     } catch {
       setError("Something went wrong");
     } finally {
@@ -70,6 +78,7 @@ export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }
           <p><strong>Student temp password:</strong> {result.studentTemporaryPassword}</p>
         </div>
       )}
+      <ProfilePhotoUpload value={studentImage} onChange={setStudentImage} label="Student photo (optional)" />
       <input className="input-premium" placeholder="Student full name" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} required />
       <div className="grid grid-cols-2 gap-md">
         <input type="date" className="input-premium" value={form.dateOfBirth} onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })} />
@@ -84,6 +93,7 @@ export default function AdmitStudentForm({ classes }: { classes: ClassOption[] }
           <option key={c.id} value={c.id}>{c.name} — Stream {c.section}</option>
         ))}
       </select>
+      <ProfilePhotoUpload value={parentImage} onChange={setParentImage} label="Parent / guardian photo (optional)" />
       <input className="input-premium" placeholder="Guardian name" value={form.guardianName} onChange={(e) => setForm({ ...form, guardianName: e.target.value })} required />
       <input className="input-premium" type="email" placeholder="Guardian email" value={form.guardianEmail} onChange={(e) => setForm({ ...form, guardianEmail: e.target.value })} required />
       <input className="input-premium" placeholder="Guardian phone" value={form.guardianPhone} onChange={(e) => setForm({ ...form, guardianPhone: e.target.value })} />

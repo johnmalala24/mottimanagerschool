@@ -1,8 +1,10 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
+import { MarkAttendanceForm } from "@/components/portal/forms/OperationForms";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
 import { getSchoolContext } from "@/lib/server/context";
 import { getTeacherRecord, getTeacherAttendance } from "@/lib/server/teacher";
+import { prisma } from "@/lib/prisma";
 
 export default async function TeacherAttendancePage() {
   const { schoolId } = await getSchoolContext();
@@ -15,11 +17,22 @@ export default async function TeacherAttendancePage() {
       </>
     );
   }
+
+  const classes = await prisma.class.findMany({
+    where: {
+      schoolId,
+      OR: [{ classTeacherId: teacher.id }, { id: { in: teacher.classesTeaching.map((c) => c.id) } }],
+    },
+    select: { id: true, name: true, section: true },
+  });
+
   const records = await getTeacherAttendance(schoolId, teacher.id);
+
   return (
     <>
       <PageHeader title="Mark Attendance" subtitle="Today's attendance records." />
       <div className="p-lg">
+        <MarkAttendanceForm classes={classes} />
         {records.length === 0 ? (
           <EmptyState icon="fact_check" title="No attendance marked today" />
         ) : (

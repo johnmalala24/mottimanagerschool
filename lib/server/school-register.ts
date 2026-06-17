@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import type { SchoolType, UserRole } from "@prisma/client";
+import { assertProfileImage } from "@/lib/server/image-utils";
 
 export type SchoolRegisterInput = {
   schoolName: string;
@@ -99,6 +100,7 @@ export type CreateStaffInput = {
   role: UserRole;
   password?: string;
   isClassTeacher?: boolean;
+  image?: string | null;
 };
 
 const STAFF_ROLES: UserRole[] = [
@@ -150,6 +152,7 @@ export async function createStaffMember(
 
   const plainPassword = input.password ?? generateTempPassword();
   const hashedPassword = await bcrypt.hash(plainPassword, 10);
+  if (input.image !== undefined) assertProfileImage(input.image);
 
   const user = await prisma.user.create({
     data: {
@@ -160,6 +163,7 @@ export async function createStaffMember(
       role: input.role,
       schoolId,
       active: true,
+      image: input.image || null,
     },
   });
 
@@ -187,6 +191,8 @@ export type AdmitStudentInput = {
   guardianEmail: string;
   guardianPhone?: string;
   relationship?: string;
+  studentImage?: string | null;
+  parentImage?: string | null;
 };
 
 function generateAdmissionNumber(schoolCode: string): string {
@@ -206,6 +212,9 @@ export async function admitStudent(
     where: { id: input.classId, schoolId },
   });
   if (!classExists) throw new Error("Class not found");
+
+  if (input.studentImage !== undefined) assertProfileImage(input.studentImage);
+  if (input.parentImage !== undefined) assertProfileImage(input.parentImage);
 
   const admissionNumber = generateAdmissionNumber(school.code);
   const studentEmail = `student.${admissionNumber.toLowerCase().replace(/[^a-z0-9]/g, ".")}@${school.code.toLowerCase()}.motti.local`;
@@ -233,7 +242,13 @@ export async function admitStudent(
           role: "PARENT",
           schoolId,
           active: true,
+          image: input.parentImage || null,
         },
+      });
+    } else if (input.parentImage) {
+      await tx.user.update({
+        where: { id: parentUser.id },
+        data: { image: input.parentImage },
       });
 
       parentRecord = await tx.parent.create({
@@ -261,6 +276,7 @@ export async function admitStudent(
         role: "STUDENT",
         schoolId,
         active: true,
+        image: input.studentImage || null,
       },
     });
 
@@ -312,6 +328,7 @@ export async function completeSchoolSetup(
     libraryEnabled?: boolean;
     hostelEnabled?: boolean;
     payrollEnabled?: boolean;
+    mpesaPaybill?: string | null;
     academicYearName?: string;
     academicYearStart?: string;
     academicYearEnd?: string;
@@ -346,6 +363,7 @@ export async function completeSchoolSetup(
         libraryEnabled: data.libraryEnabled ?? true,
         hostelEnabled: data.hostelEnabled ?? false,
         payrollEnabled: data.payrollEnabled ?? false,
+        mpesaPaybill: data.mpesaPaybill,
       },
     });
 
@@ -435,6 +453,7 @@ export async function getAllSchoolUsers(schoolId: string) {
       phone: true,
       role: true,
       active: true,
+      image: true,
       createdAt: true,
       teacher: { select: { isClassTeacher: true, employeeId: true } },
     },

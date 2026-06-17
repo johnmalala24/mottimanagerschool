@@ -570,6 +570,34 @@ async function main() {
     },
   });
 
+  const kajembeScienceTeacherUser = await prisma.user.upsert({
+    where: { email: "teacher2@kajembe.ac.ke" },
+    update: { schoolId: kajembeSchool.id },
+    create: {
+      email: "teacher2@kajembe.ac.ke",
+      name: "Mercy Mutua",
+      password,
+      role: "TEACHER",
+      schoolId: kajembeSchool.id,
+      phone: "+254711515174",
+      active: true,
+    },
+  });
+
+  const kajembeChemistryTeacherUser = await prisma.user.upsert({
+    where: { email: "teacher3@kajembe.ac.ke" },
+    update: { schoolId: kajembeSchool.id },
+    create: {
+      email: "teacher3@kajembe.ac.ke",
+      name: "Peter Mwangi",
+      password,
+      role: "TEACHER",
+      schoolId: kajembeSchool.id,
+      phone: "+254711515175",
+      active: true,
+    },
+  });
+
   const kajembeClassTeacherUser = await prisma.user.upsert({
     where: { email: "classteacher@kajembe.ac.ke" },
     update: { schoolId: kajembeSchool.id },
@@ -643,7 +671,7 @@ async function main() {
       name: "Form 3A",
       section: "A",
       academicYear: "2026",
-      capacity: 45,
+      capacity: 100,
     },
   });
 
@@ -663,6 +691,34 @@ async function main() {
       subjectId: mathematics.id,
       qualification: "B.Sc. Mathematics",
       experience: 7,
+    },
+  });
+
+  const scienceTeacherRecord = await prisma.teacher.upsert({
+    where: { userId: kajembeScienceTeacherUser.id },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      userId: kajembeScienceTeacherUser.id,
+      employeeId: "TCH-KHS-003",
+      joinDate: new Date("2025-01-10"),
+      subjectId: biology.id,
+      qualification: "B.Sc. Biology",
+      experience: 5,
+    },
+  });
+
+  const chemistryTeacherRecord = await prisma.teacher.upsert({
+    where: { userId: kajembeChemistryTeacherUser.id },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      userId: kajembeChemistryTeacherUser.id,
+      employeeId: "TCH-KHS-004",
+      joinDate: new Date("2025-03-05"),
+      subjectId: chemistry.id,
+      qualification: "B.Sc. Chemistry",
+      experience: 6,
     },
   });
 
@@ -744,6 +800,168 @@ async function main() {
     },
   });
 
+  const kajembeToday = new Date();
+  kajembeToday.setHours(0, 0, 0, 0);
+
+  const totalKajembeStudents = 100;
+  for (let studentIndex = 2; studentIndex <= totalKajembeStudents; studentIndex += 1) {
+    const suffix = String(studentIndex).padStart(3, "0");
+    const studentEmail = `student${studentIndex}@kajembe.ac.ke`;
+    const parentEmail = `parent${studentIndex}@kajembe.ac.ke`;
+    const studentName = `Student ${studentIndex} Karanja`;
+    const parentName = `Parent ${studentIndex} Karanja`;
+    const registrationNumber = `KHS-3A-${suffix}`;
+    const admissionNumber = `KHS-2026-${suffix}`;
+    const invoiceNumber = `KHS-INV-2026-${suffix}`;
+    const paymentId = `FPAY-KHS-2026-${suffix}`;
+    const marks = 65 + (studentIndex % 36);
+    const gradePoint = marks >= 90 ? "A" : marks >= 80 ? "A-" : marks >= 70 ? "B+" : marks >= 60 ? "B" : "C";
+
+    const studentUser = await prisma.user.upsert({
+      where: { email: studentEmail },
+      update: { schoolId: kajembeSchool.id },
+      create: {
+        email: studentEmail,
+        name: studentName,
+        password,
+        role: "STUDENT",
+        schoolId: kajembeSchool.id,
+        phone: `+2547115${600 + studentIndex}`,
+        active: true,
+      },
+    });
+
+    const parentUser = await prisma.user.upsert({
+      where: { email: parentEmail },
+      update: { schoolId: kajembeSchool.id },
+      create: {
+        email: parentEmail,
+        name: parentName,
+        password,
+        role: "PARENT",
+        schoolId: kajembeSchool.id,
+        phone: `+2547115${700 + studentIndex}`,
+        active: true,
+      },
+    });
+
+    const parent = await prisma.parent.upsert({
+      where: { userId: parentUser.id },
+      update: {},
+      create: {
+        schoolId: kajembeSchool.id,
+        userId: parentUser.id,
+        relationship: "Parent",
+        occupation: "Business",
+        annualIncome: 400000 + studentIndex * 2000,
+      },
+    });
+
+    const student = await prisma.student.upsert({
+      where: { userId: studentUser.id },
+      update: {},
+      create: {
+        schoolId: kajembeSchool.id,
+        userId: studentUser.id,
+        registrationNumber,
+        classId: form3A.id,
+        parentId: parent.id,
+        admissionNumber,
+        admissionDate: new Date("2026-01-08"),
+        guardianName: parentName,
+        guardianPhone: `+2547115${700 + studentIndex}`,
+        status: "ACTIVE",
+      },
+    });
+
+    await prisma.feeInvoice.upsert({
+      where: { invoiceNumber },
+      update: {},
+      create: {
+        invoiceNumber,
+        schoolId: kajembeSchool.id,
+        studentId: student.id,
+        amount: 56500,
+        paidAmount: 56500,
+        balance: 0,
+        status: "PAID",
+        dueDate: new Date("2026-05-30"),
+        academicYear: "2026",
+      },
+    });
+
+    const existingFeePayment = await prisma.feePayment.findFirst({
+      where: { transactionId: paymentId },
+    });
+
+    if (!existingFeePayment) {
+      await prisma.feePayment.create({
+        data: {
+          schoolId: kajembeSchool.id,
+          studentId: student.id,
+          amount: 56500,
+          paymentDate: new Date(`2026-05-${20 + (studentIndex % 10)}`),
+          dueDate: new Date("2026-05-30"),
+          status: "COMPLETED",
+          mode: "Online",
+          transactionId: paymentId,
+          remarks: "Full school fee payment for Form 3A",
+          academicYear: "2026",
+        },
+      });
+    }
+
+    await prisma.attendance.upsert({
+      where: {
+        classId_studentId_date: {
+          classId: form3A.id,
+          studentId: student.id,
+          date: kajembeToday,
+        },
+      },
+      update: {
+        teacherId: teacherRecord.id,
+        status: "Present",
+      },
+      create: {
+        schoolId: kajembeSchool.id,
+        classId: form3A.id,
+        studentId: student.id,
+        teacherId: teacherRecord.id,
+        date: kajembeToday,
+        status: "Present",
+      },
+    });
+
+    await prisma.grade.upsert({
+      where: {
+        schoolId_studentId_subjectId_examName_academicYear: {
+          schoolId: kajembeSchool.id,
+          studentId: student.id,
+          subjectId: mathematics.id,
+          examName: "Mid-Term",
+          academicYear: "2026",
+        },
+      },
+      update: {
+        marks,
+        gradePoint,
+        term: "2",
+      },
+      create: {
+        schoolId: kajembeSchool.id,
+        classId: form3A.id,
+        studentId: student.id,
+        subjectId: mathematics.id,
+        examName: "Mid-Term",
+        marks,
+        gradePoint,
+        term: "2",
+        academicYear: "2026",
+      },
+    });
+  }
+
   await prisma.feeStructure.upsert({
     where: { schoolId_className_academicYear: { schoolId: kajembeSchool.id, className: "Form 3A", academicYear: "2026" } },
     update: {},
@@ -776,8 +994,31 @@ async function main() {
     },
   });
 
-  const kajembeToday = new Date();
-  kajembeToday.setHours(0, 0, 0, 0);
+  const feePaymentExists = await prisma.feePayment.findFirst({
+    where: {
+      schoolId: kajembeSchool.id,
+      studentId: kajembeStudent.id,
+      amount: 56500,
+      paymentDate: new Date("2026-05-20"),
+    },
+  });
+
+  if (!feePaymentExists) {
+    await prisma.feePayment.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        studentId: kajembeStudent.id,
+        amount: 56500,
+        paymentDate: new Date("2026-05-20"),
+        dueDate: new Date("2026-05-30"),
+        status: "COMPLETED",
+        mode: "Online",
+        transactionId: "FPAY-KHS-2026-001",
+        remarks: "Full school fee payment for Form 3A",
+        academicYear: "2026",
+      },
+    });
+  }
 
   await prisma.attendance.upsert({
     where: {
@@ -829,19 +1070,255 @@ async function main() {
     },
   });
 
-  await prisma.announcement.create({
-    data: {
+  await prisma.grade.upsert({
+    where: {
+      schoolId_studentId_subjectId_examName_academicYear: {
+        schoolId: kajembeSchool.id,
+        studentId: kajembeStudent.id,
+        subjectId: englishKajembe.id,
+        examName: "Mid-Term",
+        academicYear: "2026",
+      },
+    },
+    update: {
+      marks: 82,
+      gradePoint: "A-",
+      term: "2",
+    },
+    create: {
       schoolId: kajembeSchool.id,
-      title: "KSCE registration deadline",
-      message: "All Form 3 learners must complete KCSE registration by July 15, 2026.",
-      sendSms: true,
-      recipientCount: 180,
-      createdById: kajembeAdmin.id,
+      classId: form3A.id,
+      studentId: kajembeStudent.id,
+      subjectId: englishKajembe.id,
+      examName: "Mid-Term",
+      marks: 82,
+      gradePoint: "A-",
+      term: "2",
+      academicYear: "2026",
     },
   });
 
-  await prisma.supportTicket.create({
-    data: {
+  await prisma.grade.upsert({
+    where: {
+      schoolId_studentId_subjectId_examName_academicYear: {
+        schoolId: kajembeSchool.id,
+        studentId: kajembeStudent.id,
+        subjectId: biology.id,
+        examName: "Mid-Term",
+        academicYear: "2026",
+      },
+    },
+    update: {
+      marks: 74,
+      gradePoint: "B",
+      term: "2",
+    },
+    create: {
+      schoolId: kajembeSchool.id,
+      classId: form3A.id,
+      studentId: kajembeStudent.id,
+      subjectId: biology.id,
+      examName: "Mid-Term",
+      marks: 74,
+      gradePoint: "B",
+      term: "2",
+      academicYear: "2026",
+    },
+  });
+
+  await prisma.timetable.upsert({
+    where: {
+      schoolId_classId_subjectId_teacherId_dayOfWeek_startTime_academicYear: {
+        schoolId: kajembeSchool.id,
+        classId: form3A.id,
+        subjectId: mathematics.id,
+        teacherId: teacherRecord.id,
+        dayOfWeek: "Monday",
+        startTime: "09:00",
+        academicYear: "2026",
+      },
+    },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      classId: form3A.id,
+      subjectId: mathematics.id,
+      teacherId: teacherRecord.id,
+      dayOfWeek: "Monday",
+      startTime: "09:00",
+      endTime: "10:00",
+      room: "B1",
+      academicYear: "2026",
+    },
+  });
+
+  await prisma.timetable.upsert({
+    where: {
+      schoolId_classId_subjectId_teacherId_dayOfWeek_startTime_academicYear: {
+        schoolId: kajembeSchool.id,
+        classId: form3A.id,
+        subjectId: biology.id,
+        teacherId: scienceTeacherRecord.id,
+        dayOfWeek: "Tuesday",
+        startTime: "10:00",
+        academicYear: "2026",
+      },
+    },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      classId: form3A.id,
+      subjectId: biology.id,
+      teacherId: scienceTeacherRecord.id,
+      dayOfWeek: "Tuesday",
+      startTime: "10:00",
+      endTime: "11:00",
+      room: "B2",
+      academicYear: "2026",
+    },
+  });
+
+  await prisma.timetable.upsert({
+    where: {
+      schoolId_classId_subjectId_teacherId_dayOfWeek_startTime_academicYear: {
+        schoolId: kajembeSchool.id,
+        classId: form3A.id,
+        subjectId: chemistry.id,
+        teacherId: chemistryTeacherRecord.id,
+        dayOfWeek: "Wednesday",
+        startTime: "11:00",
+        academicYear: "2026",
+      },
+    },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      classId: form3A.id,
+      subjectId: chemistry.id,
+      teacherId: chemistryTeacherRecord.id,
+      dayOfWeek: "Wednesday",
+      startTime: "11:00",
+      endTime: "12:00",
+      room: "B3",
+      academicYear: "2026",
+    },
+  });
+
+  const admissionApplication = await prisma.admission.upsert({
+    where: { applicationNumber: "KHS-ADM-2026-001" },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      applicationNumber: "KHS-ADM-2026-001",
+      studentName: "Samuel Kimani",
+      dateOfBirth: new Date("2010-06-12"),
+      gender: "Male",
+      fatherName: "John Kimani",
+      motherName: "Grace Kimani",
+      guardianName: "John Kimani",
+      contactNumber: "+254722123456",
+      email: "samuel.kimani@example.com",
+      address: "Kibera, Nairobi",
+      applyingForClass: "Form 3A",
+      previousSchool: "Kibera Primary School",
+      status: "UNDER_REVIEW",
+      remarks: "Application for Form 3A transfer student",
+    },
+  });
+
+  const transportRoute = await prisma.transport.upsert({
+    where: { schoolId_routeNumber_vehicleNumber: { schoolId: kajembeSchool.id, routeNumber: "TR-01", vehicleNumber: "KAP-123A" } },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      routeName: "Kibera Express",
+      routeNumber: "TR-01",
+      vehicleNumber: "KAP-123A",
+      driverName: "James Ndung'u",
+      driverPhone: "+254700987654",
+      capacity: 25,
+      monthlyFee: 5000,
+    },
+  });
+
+  const transportAllocationExists = await prisma.transportAllocation.findFirst({
+    where: {
+      schoolId: kajembeSchool.id,
+      studentId: kajembeStudent.id,
+      transportId: transportRoute.id,
+    },
+  });
+
+  if (!transportAllocationExists) {
+    await prisma.transportAllocation.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        studentId: kajembeStudent.id,
+        transportId: transportRoute.id,
+        stopPoint: "Kibera Junction",
+        allocationDate: new Date("2026-01-08"),
+      },
+    });
+  }
+
+  const hostel = await prisma.hostel.upsert({
+    where: { schoolId_name: { schoolId: kajembeSchool.id, name: "Sunrise Hostel" } },
+    update: {},
+    create: {
+      schoolId: kajembeSchool.id,
+      name: "Sunrise Hostel",
+      type: "Boys",
+      address: "Block C, Kajembe Road",
+      capacity: 120,
+      warden: "Moses Njuguna",
+    },
+  });
+
+  const hostelAllocationExists = await prisma.hostelAllocation.findFirst({
+    where: {
+      schoolId: kajembeSchool.id,
+      studentId: kajembeStudent.id,
+      hostelId: hostel.id,
+    },
+  });
+
+  if (!hostelAllocationExists) {
+    await prisma.hostelAllocation.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        studentId: kajembeStudent.id,
+        hostelId: hostel.id,
+        roomNumber: "C-12",
+        bedNumber: "B-04",
+        allocationDate: new Date("2026-01-08"),
+      },
+    });
+  }
+
+  const announcementExists = await prisma.announcement.findFirst({
+    where: {
+      schoolId: kajembeSchool.id,
+      title: "KSCE registration deadline",
+    },
+  });
+
+  if (!announcementExists) {
+    await prisma.announcement.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        title: "KSCE registration deadline",
+        message: "All Form 3 learners must complete KCSE registration by July 15, 2026.",
+        sendSms: true,
+        recipientCount: 180,
+        createdById: kajembeAdmin.id,
+      },
+    });
+  }
+
+  await prisma.supportTicket.upsert({
+    where: { ticketNumber: "KHS-TK-001" },
+    update: {},
+    create: {
       ticketNumber: "KHS-TK-001",
       schoolId: kajembeSchool.id,
       subject: "Payroll setup and staff salary entries",
@@ -850,37 +1327,63 @@ async function main() {
     },
   });
 
-  await prisma.auditLog.create({
-    data: {
-      action: "Kajembe High School seeded for development",
-      actorName: "System",
-      target: kajembeSchool.name,
-      schoolId: kajembeSchool.id,
-      icon: "school",
-    },
+  const payrollTransactionExists = await prisma.billingTransaction.findFirst({
+    where: { transactionId: "BILL-PAYROLL-2026-03-001" },
   });
 
-  await prisma.billingTransaction.create({
-    data: {
-      schoolId: kajembeSchool.id,
-      amount: 350000,
-      description: "Payroll disbursement — March 2026",
-      status: "COMPLETED",
-      transactionId: "BILL-PAYROLL-2026-03-001",
-    },
-  });
+  if (!payrollTransactionExists) {
+    await prisma.billingTransaction.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        amount: 350000,
+        description: "Payroll disbursement — March 2026",
+        status: "COMPLETED",
+        transactionId: "BILL-PAYROLL-2026-03-001",
+      },
+    });
+  }
 
-  await prisma.expense.create({
-    data: {
+  const payrollExpenseExists = await prisma.expense.findFirst({
+    where: {
       schoolId: kajembeSchool.id,
       category: "Payroll",
       amount: 350000,
-      description: "Teacher and support staff salaries for March 2026",
       date: new Date("2026-03-31"),
     },
   });
 
-  console.log("Seed complete:", { superAdmin: superAdmin.email, greenwoodSchool: school.name, kajembeSchool: kajembeSchool.name });
+  if (!payrollExpenseExists) {
+    await prisma.expense.create({
+      data: {
+        schoolId: kajembeSchool.id,
+        category: "Payroll",
+        amount: 350000,
+        description: "Teacher and support staff salaries for March 2026",
+        date: new Date("2026-03-31"),
+      },
+    });
+  }
+
+  const auditLogExists = await prisma.auditLog.findFirst({
+    where: {
+      action: "Kajembe High School seeded for development",
+      schoolId: kajembeSchool.id,
+    },
+  });
+
+  if (!auditLogExists) {
+    await prisma.auditLog.create({
+      data: {
+        action: "Kajembe High School seeded for development",
+        actorName: "System",
+        target: kajembeSchool.name,
+        schoolId: kajembeSchool.id,
+        icon: "school",
+      },
+    });
+  }
+
+  console.log("Seed complete:", { superAdmin: superAdmin.email, greenwoodSchool: school.name, kajembeSchool: kajembeSchool.name, kajembeAdmin: kajembeAdmin.email });
 }
 
 main()

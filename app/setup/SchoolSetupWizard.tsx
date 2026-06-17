@@ -46,6 +46,7 @@ export default function SchoolSetupWizard() {
     hostelEnabled: false,
     payrollEnabled: false,
   });
+  const [mpesaPaybill, setMpesaPaybill] = useState("");
 
   const steps: Step[] = ["branding", "academic", "classes", "subjects", "modules"];
   const stepIndex = steps.indexOf(step);
@@ -71,6 +72,7 @@ export default function SchoolSetupWizard() {
           ],
           classes: classes.filter((c) => c.name.trim()),
           subjects: subjects.filter((s) => s.name.trim() && s.code.trim()),
+          mpesaPaybill: mpesaPaybill || undefined,
           ...modules,
         }),
       });
@@ -205,6 +207,10 @@ export default function SchoolSetupWizard() {
                     <input type="checkbox" checked={modules[key]} onChange={(e) => setModules({ ...modules, [key]: e.target.checked })} className="w-4 h-4 accent-[#006b2c]" />
                   </label>
                 ))}
+                <div>
+                  <label className="block text-sm font-semibold mb-1.5">M-Pesa Paybill (optional)</label>
+                  <input value={mpesaPaybill} onChange={(e) => setMpesaPaybill(e.target.value)} className="input-premium" placeholder="e.g. 522522" />
+                </div>
               </div>
             </>
           )}

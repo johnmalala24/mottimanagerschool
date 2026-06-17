@@ -31,3 +31,36 @@ export async function requireAdmissionsStaff() {
   if (!user.schoolId) throw new Error("No school linked");
   return user;
 }
+
+export async function requireTeacherStaff() {
+  const user = await requireRole(["TEACHER", "CLASS_TEACHER", "SCHOOL_ADMIN", "DEPUTY_ADMIN"]);
+  if (!user.schoolId) throw new Error("No school linked");
+  return user;
+}
+
+export async function requireFinanceStaff() {
+  const user = await requireRole(["FINANCE", "SCHOOL_ADMIN", "DEPUTY_ADMIN"]);
+  if (!user.schoolId) throw new Error("No school linked");
+  return user;
+}
+
+export async function requireSchoolOpsStaff() {
+  const user = await requireRole([
+    "SCHOOL_ADMIN",
+    "DEPUTY_ADMIN",
+    "RECEPTIONIST",
+    "LIBRARIAN",
+    "TRANSPORT_MANAGER",
+    "HOSTEL_MANAGER",
+    "FINANCE",
+    "ICT_ADMIN",
+  ]);
+  if (!user.schoolId) throw new Error("No school linked");
+  return user;
+}
+
+export async function requireProfileManager() {
+  const user = await requireRole(["SCHOOL_ADMIN", "DEPUTY_ADMIN", "ICT_ADMIN"]);
+  if (!user.schoolId) throw new Error("No school linked");
+  return user;
+}

@@ -10,6 +10,13 @@ async function enrichToken(token: Record<string, unknown>) {
   const schoolId = token.schoolId as string | null | undefined;
 
   if (userId) {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { image: true, name: true },
+    });
+    token.picture = dbUser?.image ?? null;
+    if (dbUser?.name) token.name = dbUser.name;
+
     const teacher = await prisma.teacher.findUnique({
       where: { userId },
       select: {
@@ -118,6 +125,8 @@ export const authOptions: NextAuthOptions = {
         u.isClassTeacher = token.isClassTeacher as boolean;
         u.setupCompleted = token.setupCompleted as boolean;
         (u as { disabledRoles?: string[] }).disabledRoles = (token.disabledRoles as string[]) ?? [];
+        session.user.image = (token.picture as string | null) ?? session.user.image;
+        session.user.name = (token.name as string | null) ?? session.user.name;
       }
       return session;
     },

@@ -1,8 +1,11 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
+import { UserAvatar } from "@/components/portal/ProfilePhotoUpload";
+import { AdminUserPhotoForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
 import { getSchoolStudents } from "@/lib/server/school-admin";
+import { prisma } from "@/lib/prisma";
 
 export default async function SchoolAdminStudentsPage() {
   const { schoolId } = await getSchoolContext();
@@ -18,12 +21,20 @@ export default async function SchoolAdminStudentsPage() {
     );
   }
 
-  const students = await getSchoolStudents(schoolId);
+  const [students, users] = await Promise.all([
+    getSchoolStudents(schoolId),
+    prisma.user.findMany({
+      where: { schoolId },
+      select: { id: true, name: true, email: true, image: true, role: true },
+      orderBy: { name: "asc" },
+    }),
+  ]);
 
   return (
     <>
-      <PageHeader title="Student Management" subtitle="All enrolled students." />
+      <PageHeader title="Student Management" subtitle="All enrolled students and profile photos." />
       <div className="p-lg">
+        <AdminUserPhotoForm users={users} />
         {students.length === 0 ? (
           <EmptyState
             icon="groups"
@@ -35,10 +46,10 @@ export default async function SchoolAdminStudentsPage() {
             <table className="w-full">
               <thead className="bg-surface-container-low">
                 <tr>
-                  {["Adm No.", "Name", "Class", "Parent", "Phone", "Fee Status", "Status"].map(
+                  {["", "Adm No.", "Name", "Class", "Parent", "Phone", "Fee Status", "Status"].map(
                     (h) => (
                       <th
-                        key={h}
+                        key={h || "photo"}
                         className="text-left px-md py-sm text-label-sm font-bold text-secondary uppercase whitespace-nowrap"
                       >
                         {h}
@@ -55,6 +66,9 @@ export default async function SchoolAdminStudentsPage() {
                       key={s.id}
                       className="border-t border-outline-variant hover:bg-surface-container-low"
                     >
+                      <td className="px-md py-md">
+                        <UserAvatar name={s.user.name ?? "S"} image={s.user.image} size="sm" />
+                      </td>
                       <td className="px-md py-md text-label-sm font-mono text-secondary">
                         {s.registrationNumber}
                       </td>

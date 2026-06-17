@@ -1,5 +1,7 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
+import UserProfileSettings from "@/components/portal/UserProfileSettings";
+import { CreateAnnouncementForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
 import { getSchoolAnnouncements } from "@/lib/server/school-admin";
 import { formatDate } from "@/lib/format";
@@ -21,6 +23,7 @@ export default async function SchoolAdminCommunicationPage() {
     <>
       <PageHeader title="Communication Center" subtitle="Announcements to parents and staff." />
       <div className="p-lg">
+        <CreateAnnouncementForm />
         {announcements.length === 0 ? (
           <EmptyState icon="campaign" title="No announcements" description="Send announcements to parents and staff." />
         ) : (

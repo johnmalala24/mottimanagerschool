@@ -3,8 +3,11 @@ import PortalStatCard from "@/components/portal/PortalStatCard";
 import EmptyState from "@/components/portal/EmptyState";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
 import { ChartCard, FinanceComparisonChart, RevenueAreaChart, StatusPieChart } from "@/components/charts/DashboardCharts";
+import { FinanceActionForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
 import { getFinanceDashboard, getFinanceChartData } from "@/lib/server/finance";
+import { getSchoolFeeData } from "@/lib/server/school-admin";
+import { prisma } from "@/lib/prisma";
 import { formatDate, formatKES } from "@/lib/format";
 
 export default async function FinanceDashboardPage() {
@@ -19,15 +22,29 @@ export default async function FinanceDashboardPage() {
     );
   }
 
-  const [data, charts] = await Promise.all([
+  const [data, charts, feeData, students] = await Promise.all([
     getFinanceDashboard(schoolId),
     getFinanceChartData(schoolId),
+    getSchoolFeeData(schoolId),
+    prisma.student.findMany({
+      where: { schoolId, status: "ACTIVE" },
+      include: { user: { select: { name: true } } },
+    }),
   ]);
 
   return (
     <>
       <PageHeader title="Bursar Portal" subtitle="Finance overview for your school." />
       <div className="p-lg flex flex-col gap-lg">
+        <FinanceActionForm
+          students={students.map((s) => ({ id: s.id, name: s.user.name ?? "Student" }))}
+          invoices={feeData.invoices.map((i) => ({
+            id: i.id,
+            invoiceNumber: i.invoiceNumber,
+            studentId: i.studentId,
+            balance: i.balance,
+          }))}
+        />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-md">
           <PortalStatCard label="Collected Today" value={data.collectedTodayFormatted} icon="payments" badge="Live" badgeVariant="info" />
           <PortalStatCard label="Pending Invoices" value={String(data.pendingInvoices)} icon="receipt" />

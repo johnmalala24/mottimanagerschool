@@ -1,7 +1,8 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
+import { OperationsQuickForm } from "@/components/portal/forms/OperationForms";
 import { getSchoolContext } from "@/lib/server/context";
-import { getSchoolClasses } from "@/lib/server/school-admin";
+import { getSchoolClasses, getSchoolAcademicYears } from "@/lib/server/school-admin";
 
 export default async function SchoolAdminClassesPage() {
   const { schoolId } = await getSchoolContext();
@@ -14,12 +15,18 @@ export default async function SchoolAdminClassesPage() {
     );
   }
 
-  const classes = await getSchoolClasses(schoolId);
+  const [classes, years] = await Promise.all([
+    getSchoolClasses(schoolId),
+    getSchoolAcademicYears(schoolId),
+  ]);
+  const currentYear = years.find((y) => y.isCurrent)?.name ?? String(new Date().getFullYear());
 
   return (
     <>
       <PageHeader title="Classes & Streams" subtitle="Academic class structure." />
-      <div className="p-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+      <div className="p-lg">
+        <OperationsQuickForm action="class" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md mt-lg">
         {classes.length === 0 ? (
           <EmptyState icon="class" title="No classes" description="Create classes for your academic year." />
         ) : (
@@ -41,6 +48,7 @@ export default async function SchoolAdminClassesPage() {
             </div>
           ))
         )}
+        </div>
       </div>
     </>
   );
