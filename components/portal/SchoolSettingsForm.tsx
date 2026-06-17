@@ -19,6 +19,7 @@ type SettingsData = {
   disabledRoles: UserRole[];
   cbeEnabled: boolean;
   smsEnabled: boolean;
+  emailEnabled: boolean;
   whatsappEnabled: boolean;
   transportEnabled: boolean;
   libraryEnabled: boolean;
@@ -197,7 +198,8 @@ export default function SchoolSettingsForm({ initial }: SchoolSettingsFormProps)
           {(
             [
               ["cbeEnabled", "CBE / Competency-Based Education"],
-              ["smsEnabled", "SMS Notifications"],
+              ["emailEnabled", "Email Notifications (Resend)"],
+              ["smsEnabled", "SMS Notifications (coming soon)"],
               ["whatsappEnabled", "WhatsApp Alerts"],
               ["transportEnabled", "Transport Module"],
               ["libraryEnabled", "Library Module"],

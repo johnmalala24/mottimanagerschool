@@ -1,7 +1,9 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
+import { CreateExamForm, ExamListPanel } from "@/components/portal/ExamWorkflow";
 import { getSchoolContext } from "@/lib/server/context";
-import { getSchoolGrades } from "@/lib/server/school-admin";
+import { getSchoolExams } from "@/lib/server/exams";
+import { prisma } from "@/lib/prisma";
 
 export default async function SchoolAdminExamsPage() {
   const { schoolId } = await getSchoolContext();
@@ -14,40 +16,29 @@ export default async function SchoolAdminExamsPage() {
     );
   }
 
-  const grades = await getSchoolGrades(schoolId);
+  const [exams, classes, subjects, years] = await Promise.all([
+    getSchoolExams(schoolId),
+    prisma.class.findMany({ where: { schoolId }, select: { id: true, name: true, section: true } }),
+    prisma.subject.findMany({ where: { schoolId }, select: { id: true, name: true, code: true } }),
+    prisma.academicYear.findFirst({ where: { schoolId, isCurrent: true }, select: { name: true } }),
+  ]);
 
   return (
     <>
-      <PageHeader title="Exams & CBE" subtitle="Exam marks and assessment records." />
-      <div className="p-lg">
-        {grades.length === 0 ? (
-          <EmptyState icon="grade" title="No exam records" description="Teachers enter marks from the teacher portal." />
-        ) : (
-          <div className="tonal-card rounded-xl overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-surface-container-low">
-                <tr>
-                  {["Student", "Class", "Subject", "Exam", "Marks", "Grade", "Term"].map((h) => (
-                    <th key={h} className="text-left px-md py-sm text-label-sm font-bold text-secondary uppercase whitespace-nowrap">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {grades.map((g) => (
-                  <tr key={g.id} className="border-t border-outline-variant">
-                    <td className="px-md py-md font-semibold">{g.student.user.name}</td>
-                    <td className="px-md py-md text-secondary">{g.class.name}</td>
-                    <td className="px-md py-md text-secondary">{g.subject.name}</td>
-                    <td className="px-md py-md">{g.examName}</td>
-                    <td className="px-md py-md font-bold">{g.marks ?? "—"}</td>
-                    <td className="px-md py-md">{g.gradePoint ?? "—"}</td>
-                    <td className="px-md py-md text-secondary">{g.term}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+      <PageHeader
+        title="Exams & Assessment"
+        subtitle="Create exams, enter marks, process results, and publish to parents — Zeraki-style workflow."
+      />
+      <div className="flex flex-col gap-lg">
+        <CreateExamForm
+          classes={classes}
+          subjects={subjects}
+          defaultYear={years?.name ?? String(new Date().getFullYear())}
+        />
+        <div>
+          <h2 className="text-title-md font-bold mb-md">All Exams</h2>
+          <ExamListPanel exams={exams} />
+        </div>
       </div>
     </>
   );

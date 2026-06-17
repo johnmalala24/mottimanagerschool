@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const announcement = await createAnnouncement(user.schoolId!, {
       title: body.title,
       message: body.message,
-      sendSms: body.sendSms,
+      sendEmail: body.sendEmail ?? body.sendSms,
       createdById: user.id,
     });
     return NextResponse.json({ announcement }, { status: 201 });

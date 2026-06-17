@@ -136,6 +136,21 @@ enum TermStatus {
   COMPLETED
 }
 
+enum ExamStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  PROCESSED
+  PUBLISHED
+}
+
+enum SubmissionStatus {
+  DRAFT
+  SUBMITTED
+  GRADED
+  LATE
+}
+
 enum InvoiceStatus {
   PAID
   PARTIAL
@@ -209,8 +224,13 @@ model School {
   appointments          Appointment[]
   disciplineRecords     DisciplineRecord[]
   assignments           Assignment[]
+  assignmentSubmissions AssignmentSubmission[]
   cbeAssessments        CbeAssessment[]
+  cbeLearningAreas      CbeLearningArea[]
   learningMaterials     LearningMaterial[]
+  exams                 Exam[]
+  promotionBatches      PromotionBatch[]
+  emailLogs             EmailLog[]
   
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
@@ -223,6 +243,7 @@ model SchoolSettings {
   setupCompleted    Boolean  @default(false)
   cbeEnabled        Boolean  @default(false)
   smsEnabled        Boolean  @default(false)
+  emailEnabled      Boolean  @default(true)
   whatsappEnabled   Boolean  @default(false)
   transportEnabled  Boolean  @default(false)
   libraryEnabled    Boolean  @default(true)
@@ -335,6 +356,8 @@ model Announcement {
   title          String
   message        String
   sendSms        Boolean  @default(false)
+  sendEmail      Boolean  @default(false)
+  emailsSent     Int      @default(0)
   recipientCount Int      @default(0)
   createdById    String?
   createdAt      DateTime @default(now())
@@ -456,12 +479,132 @@ model Assignment {
   title       String
   description String?
   dueDate     DateTime?
+  maxScore    Int       @default(100)
   status      String    @default("Open")
+  submissions AssignmentSubmission[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   @@index([schoolId])
   @@index([classId])
+}
+
+model AssignmentSubmission {
+  id           String           @id @default(cuid())
+  schoolId     String
+  school       School           @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  assignmentId String
+  assignment   Assignment       @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  content      String?          @db.Text
+  fileUrl      String?
+  score        Float?
+  feedback     String?
+  status       SubmissionStatus @default(SUBMITTED)
+  submittedAt  DateTime         @default(now())
+  gradedAt     DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@unique([assignmentId, studentId])
+  @@index([schoolId])
+  @@index([studentId])
+}
+
+model Exam {
+  id           String     @id @default(cuid())
+  schoolId     String
+  school       School     @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  name         String
+  classId      String
+  class        Class      @relation(fields: [classId], references: [id], onDelete: Cascade)
+  term         String
+  academicYear String
+  maxMarks     Int        @default(100)
+  status       ExamStatus @default(DRAFT)
+  subjectIds   String[]   @default([])
+  publishedAt  DateTime?
+  processedAt  DateTime?
+  createdById  String?
+  grades       Grade[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([schoolId])
+  @@index([classId])
+  @@index([status])
+}
+
+model CbeLearningArea {
+  id        String      @id @default(cuid())
+  schoolId  String
+  school    School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  name      String
+  code      String
+  gradeLevel String?
+  strands   CbeStrand[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([schoolId, code])
+  @@index([schoolId])
+}
+
+model CbeStrand {
+  id             String          @id @default(cuid())
+  learningAreaId String
+  learningArea   CbeLearningArea @relation(fields: [learningAreaId], references: [id], onDelete: Cascade)
+  name           String
+  code           String
+  competencies   CbeCompetency[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([learningAreaId, code])
+}
+
+model CbeCompetency {
+  id        String    @id @default(cuid())
+  strandId  String
+  strand    CbeStrand @relation(fields: [strandId], references: [id], onDelete: Cascade)
+  name      String
+  code      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([strandId, code])
+}
+
+model PromotionBatch {
+  id              String   @id @default(cuid())
+  schoolId        String
+  school          School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  fromAcademicYear String
+  toAcademicYear  String
+  promotedCount   Int      @default(0)
+  repeatedCount   Int      @default(0)
+  graduatedCount  Int      @default(0)
+  notes           String?
+  createdById     String?
+  createdAt       DateTime @default(now())
+
+  @@index([schoolId])
+}
+
+model EmailLog {
+  id        String   @id @default(cuid())
+  schoolId  String?
+  school    School?  @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+  to        String
+  subject   String
+  type      String
+  status    String   @default("SENT")
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([schoolId])
+  @@index([createdAt])
 }
 
 model CbeAssessment {
@@ -516,6 +659,7 @@ model Class {
   timetables      Timetable[]
   assignments     Assignment[]
   learningMaterials LearningMaterial[]
+  exams           Exam[]
   
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
@@ -588,6 +732,7 @@ model Student {
   disciplineRecords     DisciplineRecord[]
   cbeAssessments        CbeAssessment[]
   libraryIssuances      LibraryIssuance[]
+  assignmentSubmissions AssignmentSubmission[]
   
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
@@ -724,11 +869,16 @@ model Grade {
   student           Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
   subjectId         String
   subject           Subject           @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  examName          String            // "Mid-Term", "Final", etc.
+  examId            String?
+  exam              Exam?             @relation(fields: [examId], references: [id], onDelete: SetNull)
+  examName          String
   marks             Float?
-  gradePoint        String?           // "A+", "A", "B", etc.
-  term              String            // "1st", "2nd", "3rd"
+  gradePoint        String?
+  position          Int?
+  teacherComment    String?
+  term              String
   academicYear      String
+  isPublished       Boolean           @default(false)
   
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
@@ -738,6 +888,7 @@ model Grade {
   @@index([classId])
   @@index([studentId])
   @@index([subjectId])
+  @@index([examId])
 }
 
 // ============= TIMETABLE =============

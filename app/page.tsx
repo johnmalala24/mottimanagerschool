@@ -1,40 +1,103 @@
 import Link from 'next/link'
 import { getLandingStats } from '@/lib/server/landing'
 
+const services = [
+  {
+    icon: 'groups',
+    title: 'Student & Staff Management',
+    desc: 'Admit students, manage staff roles, class assignments, and end-of-year promotion workflows.',
+  },
+  {
+    icon: 'calendar_today',
+    title: 'Attendance Tracking',
+    desc: 'Mark daily attendance from any device. Parents get email alerts and in-app notifications for absences.',
+  },
+  {
+    icon: 'analytics',
+    title: 'Exams & Report Cards',
+    desc: 'Zeraki-style exam workflow: create → enter marks → process → publish. Branded PDF report cards.',
+  },
+  {
+    icon: 'payments',
+    title: 'Fees & Manual M-Pesa',
+    desc: 'Fee structures, invoices, manual payment recording, email receipts, and automated fee reminders.',
+  },
+  {
+    icon: 'mail',
+    title: 'Email Communication',
+    desc: 'Send announcements to parents and staff via Resend. In-app notification bell on every portal.',
+  },
+  {
+    icon: 'auto_awesome',
+    title: 'CBE / CBC Curriculum',
+    desc: 'Learning areas, strands, competencies, and EE/ME/AE/BE assessments with portfolio tracking.',
+  },
+  {
+    icon: 'assignment',
+    title: 'Assignments',
+    desc: 'Teachers post assignments; students submit online; teachers grade with feedback and email alerts.',
+  },
+  {
+    icon: 'summarize',
+    title: 'Analytics & Exports',
+    desc: 'Performance dashboards, at-risk student flags, and CSV export for students, grades, fees, attendance.',
+  },
+  {
+    icon: 'local_library',
+    title: 'Library Module',
+    desc: 'Book catalog, issue and return tracking, overdue fines — toggle on per school.',
+  },
+  {
+    icon: 'directions_bus',
+    title: 'Transport & Hostel',
+    desc: 'Route management, student allocations, boarding rooms — optional modules for your school.',
+  },
+  {
+    icon: 'how_to_reg',
+    title: 'Admissions Portal',
+    desc: 'Online applications, review workflow, and one-click admission with parent account creation.',
+  },
+  {
+    icon: 'palette',
+    title: 'Custom Branding',
+    desc: 'Your logo, theme colors, and motto on every portal, report card, and email notification.',
+  },
+]
+
 const features = [
   {
-    title: 'M-Pesa Integration',
-    desc: 'Collect school fees with STK Push and C2B payments. Reconcile transactions in real time.',
+    title: 'Email Notifications',
+    desc: 'Parents receive fee receipts, absence alerts, exam results, and announcements via professional branded emails.',
   },
   {
     title: 'CBE Ready',
-    desc: 'Competency-Based Education workflows for rubrics, portfolios, and mastery tracking.',
+    desc: 'Full competency-based curriculum structure with learning areas, strands, and rubric assessments.',
   },
   {
-    title: 'Role-Based Portals',
-    desc: 'Dedicated portals for admin, finance, teachers, parents, students, and optional modules.',
+    title: '14 Role-Based Portals',
+    desc: 'Admin, finance, teachers, parents, students, admissions, library, transport, hostel, and more.',
   },
   {
-    title: 'Custom Branding',
-    desc: 'Set your school colors, logo, and motto. Branded reports and dashboards for every user.',
+    title: 'Exam Workflow',
+    desc: 'Draft → Open → Close → Process rankings → Publish to parents with one click.',
   },
   {
     title: 'Live Analytics',
-    desc: 'Attendance trends, fee collections, and enrollment charts on clean admin dashboards.',
+    desc: 'Fee collection trends, subject performance, attendance rates, and at-risk student identification.',
   },
   {
     title: 'Multi-Tenant SaaS',
-    desc: 'Isolated school data, secure authentication, and configurable modules per institution.',
+    desc: 'Each school is fully isolated with its own data, branding, users, and configurable modules.',
   },
 ]
 
 const portals = [
-  { href: '/school-admin', title: 'School Admin', desc: 'Students, staff, classes, exams, analytics' },
-  { href: '/finance', title: 'Finance', desc: 'Fees, M-Pesa, invoices, receipts, reports' },
-  { href: '/teacher', title: 'Teacher', desc: 'Attendance, marks, assignments, CBE' },
-  { href: '/parent', title: 'Parent', desc: 'Results, fees, attendance, communication' },
-  { href: '/student', title: 'Student', desc: 'Timetable, assignments, results, CBE' },
-  { href: '/admissions', title: 'Admissions', desc: 'Applications, registration, approvals' },
+  { href: '/school-admin', title: 'School Admin', desc: 'Students, exams, promotion, analytics, settings' },
+  { href: '/finance', title: 'Finance / Bursar', desc: 'Fees, manual M-Pesa, invoices, reminders, exports' },
+  { href: '/teacher', title: 'Teacher', desc: 'Attendance, marks grid, assignments, CBE assessments' },
+  { href: '/parent', title: 'Parent', desc: 'Report cards, fees, attendance, email alerts' },
+  { href: '/student', title: 'Student', desc: 'Timetable, assignments, results, CBE portfolio' },
+  { href: '/admissions', title: 'Admissions', desc: 'Applications, review, enrollment' },
 ]
 
 const steps = [
@@ -49,7 +112,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-white text-on-surface">
-      {/* Navigation */}
       <header className="sticky top-0 z-50 bg-white border-b border-[#E2E8F0]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
@@ -59,64 +121,48 @@ export default async function Home() {
             <span className="text-lg font-bold text-primary tracking-tight">MottiManager</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-secondary">
+            <Link href="#services" className="hover:text-primary transition-colors">Services</Link>
             <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
             <Link href="#portals" className="hover:text-primary transition-colors">Portals</Link>
             <Link href="#how-it-works" className="hover:text-primary transition-colors">How it works</Link>
           </nav>
           <div className="flex items-center gap-3">
-            <Link
-              href="/auth/signin"
-              className="hidden sm:inline-flex text-sm font-semibold text-secondary px-4 py-2 rounded-lg hover:bg-[#f8f9ff] transition-colors"
-            >
+            <Link href="/auth/signin" className="hidden sm:inline-flex text-sm font-semibold text-secondary px-4 py-2 rounded-lg hover:bg-[#f8f9ff] transition-colors">
               Sign in
             </Link>
-            <Link
-              href="/auth/signup"
-              className="inline-flex items-center bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-            >
+            <Link href="/auth/signup" className="inline-flex items-center bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
               Get started
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
       <section className="border-b border-[#E2E8F0] bg-[#fafcfb]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold text-primary mb-4 tracking-wide uppercase">
-              School Management Platform
-            </p>
+            <p className="text-sm font-semibold text-primary mb-4 tracking-wide uppercase">School Management Platform</p>
             <h1 className="text-4xl sm:text-5xl font-bold text-on-surface leading-tight tracking-tight mb-6">
               Manage your school with clarity, control, and confidence.
             </h1>
             <p className="text-lg text-secondary leading-relaxed mb-8 max-w-2xl">
-              MottiManager is a multi-tenant platform built for East African schools — fees via M-Pesa,
-              CBE support, branded portals, and role-based access in one professional system.
+              MottiManager is a multi-tenant platform built for East African schools — exams like Zeraki,
+              email notifications, CBE support, branded portals, and role-based access in one professional system.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center justify-center bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
-              >
+              <Link href="/auth/signup" className="inline-flex items-center justify-center bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
                 Register your school
               </Link>
-              <Link
-                href="/auth/signin"
-                className="inline-flex items-center justify-center border border-[#E2E8F0] bg-white text-on-surface px-6 py-3 rounded-lg font-semibold hover:bg-[#f8f9ff] transition-colors"
-              >
+              <Link href="/auth/signin" className="inline-flex items-center justify-center border border-[#E2E8F0] bg-white text-on-surface px-6 py-3 rounded-lg font-semibold hover:bg-[#f8f9ff] transition-colors">
                 Sign in to portal
               </Link>
             </div>
           </div>
-
-          {/* Stats strip */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-[#E2E8F0] border border-[#E2E8F0] rounded-xl overflow-hidden">
             {[
               { value: landing.schools.toLocaleString(), label: 'Schools' },
               { value: landing.students.toLocaleString(), label: 'Students' },
               { value: landing.revenueFormatted, label: 'Fees processed' },
-              { value: '99.9%', label: 'Uptime' },
+              { value: '14', label: 'Role portals' },
             ].map((stat) => (
               <div key={stat.label} className="bg-white px-6 py-5">
                 <p className="text-2xl font-bold text-on-surface">{stat.value}</p>
@@ -127,69 +173,31 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* API-style highlight — Daraja-inspired */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-4">
-              Built for real school operations
-            </h2>
-            <p className="text-secondary leading-relaxed mb-6">
-              From fee collection to exam reporting, every module is designed for clarity.
-              Finance teams reconcile M-Pesa payments. Administrators get live dashboards.
-              Parents receive branded report cards with your school identity.
-            </p>
-            <ul className="space-y-3 text-sm text-on-surface-variant">
-              {[
-                'STK Push and C2B M-Pesa payment flows',
-                'Branded reports with your school logo',
-                'Configurable roles — enable only what you need',
-                'Secure, school-isolated data',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl border border-[#E2E8F0] bg-[#0b1c30] overflow-hidden shadow-sm">
-            <div className="px-4 py-3 border-b border-white/10 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#eab308]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#22c55e]" />
-              <span className="ml-2 text-xs text-white/50 font-mono">fee-payment.json</span>
+      <section id="services" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 scroll-mt-16">
+        <div className="mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-3">What MottiManager offers</h2>
+          <p className="text-secondary max-w-2xl">Everything your school needs to run day-to-day — from admission to graduation.</p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((s) => (
+            <div key={s.title} className="bg-white border border-[#E2E8F0] rounded-xl p-6 hover:border-primary/30 transition-colors">
+              <span className="material-symbols-outlined text-primary text-2xl mb-3 block">{s.icon}</span>
+              <h3 className="font-semibold text-on-surface mb-2">{s.title}</h3>
+              <p className="text-sm text-secondary leading-relaxed">{s.desc}</p>
             </div>
-            <pre className="p-5 text-sm text-[#62df7d] font-mono leading-relaxed overflow-x-auto">
-{`{
-  "school": "Greenwood Academy",
-  "student": "ADM-2026-0042",
-  "amount": 15000,
-  "currency": "KES",
-  "channel": "M-Pesa STK Push",
-  "status": "COMPLETED",
-  "receipt": "QAB1CD2EFG"
-}`}
-            </pre>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Features */}
       <section id="features" className="bg-[#f8f9ff] border-y border-[#E2E8F0] scroll-mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
           <div className="mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-3">Platform features</h2>
-            <p className="text-secondary max-w-2xl">
-              Everything your school needs — without unnecessary complexity.
-            </p>
+            <p className="text-secondary max-w-2xl">Built for real school operations — professional, clean, and user-friendly.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f) => (
-              <div
-                key={f.title}
-                className="bg-white border border-[#E2E8F0] rounded-xl p-6 hover:border-primary/30 transition-colors"
-              >
+              <div key={f.title} className="bg-white border border-[#E2E8F0] rounded-xl p-6 hover:border-primary/30 transition-colors">
                 <h3 className="font-semibold text-on-surface mb-2">{f.title}</h3>
                 <p className="text-sm text-secondary leading-relaxed">{f.desc}</p>
               </div>
@@ -198,7 +206,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* How it works */}
       <section id="how-it-works" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 scroll-mt-16">
         <div className="mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-3">How it works</h2>
@@ -207,9 +214,7 @@ export default async function Home() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((s) => (
             <div key={s.num} className="border border-[#E2E8F0] rounded-xl p-6">
-              <span className="inline-flex w-8 h-8 items-center justify-center rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
-                {s.num}
-              </span>
+              <span className="inline-flex w-8 h-8 items-center justify-center rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">{s.num}</span>
               <h3 className="font-semibold text-on-surface mb-2">{s.title}</h3>
               <p className="text-sm text-secondary leading-relaxed">{s.desc}</p>
             </div>
@@ -217,25 +222,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Portals */}
       <section id="portals" className="bg-[#f8f9ff] border-y border-[#E2E8F0] scroll-mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
           <div className="mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-3">Role-based portals</h2>
-            <p className="text-secondary max-w-2xl">
-              Each role gets a focused workspace. Disable modules you do not need from Settings.
-            </p>
+            <p className="text-secondary max-w-2xl">Each role gets a focused workspace. Disable modules you do not need from Settings.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {portals.map((p) => (
-              <Link
-                key={p.href}
-                href={p.href}
-                className="group bg-white border border-[#E2E8F0] rounded-xl p-5 hover:border-primary transition-colors"
-              >
-                <h3 className="font-semibold text-on-surface group-hover:text-primary transition-colors mb-1">
-                  {p.title}
-                </h3>
+              <Link key={p.href} href={p.href} className="group bg-white border border-[#E2E8F0] rounded-xl p-5 hover:border-primary transition-colors">
+                <h3 className="font-semibold text-on-surface group-hover:text-primary transition-colors mb-1">{p.title}</h3>
                 <p className="text-sm text-secondary">{p.desc}</p>
               </Link>
             ))}
@@ -243,67 +239,30 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="border border-[#E2E8F0] rounded-2xl p-8 sm:p-12 text-center bg-white">
-          <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-4">
-            Ready to get started?
-          </h2>
-          <p className="text-secondary mb-8 max-w-lg mx-auto">
-            Register your school in minutes. No credit card required to begin setup.
-          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-on-surface mb-4">Ready to get started?</h2>
+          <p className="text-secondary mb-8 max-w-lg mx-auto">Register your school in minutes. No credit card required to begin setup.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/auth/signup"
-              className="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
-            >
+            <Link href="/auth/signup" className="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
               Create school account
             </Link>
-            <Link
-              href="/auth/signin"
-              className="inline-flex items-center justify-center border border-[#E2E8F0] px-8 py-3 rounded-lg font-semibold text-secondary hover:bg-[#f8f9ff] transition-colors"
-            >
+            <Link href="/auth/signin" className="inline-flex items-center justify-center border border-[#E2E8F0] px-8 py-3 rounded-lg font-semibold text-secondary hover:bg-[#f8f9ff] transition-colors">
               Sign in
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-[#E2E8F0] bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 bg-primary rounded-md flex items-center justify-center">
-                  <span className="material-symbols-outlined icon-filled text-white text-[16px]">school</span>
-                </div>
-                <span className="font-bold text-primary">MottiManager</span>
-              </div>
-              <p className="text-sm text-secondary leading-relaxed">
-                School management for East Africa. M-Pesa, CBE, and multi-portal access.
-              </p>
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 bg-primary rounded-md flex items-center justify-center">
+              <span className="material-symbols-outlined icon-filled text-white text-[16px]">school</span>
             </div>
-            {[
-              { title: 'Platform', links: [['Get started', '/auth/signup'], ['Sign in', '/auth/signin']] },
-              { title: 'Product', links: [['Features', '#features'], ['Portals', '#portals'], ['How it works', '#how-it-works']] },
-              { title: 'Support', links: [['Documentation', '#'], ['Contact', '#']] },
-            ].map((col) => (
-              <div key={col.title}>
-                <h5 className="text-xs font-semibold uppercase tracking-wider text-secondary mb-3">{col.title}</h5>
-                <div className="flex flex-col gap-2">
-                  {col.links.map(([label, href]) => (
-                    <Link key={label} href={href} className="text-sm text-secondary hover:text-primary transition-colors">
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <span className="font-bold text-primary">MottiManager</span>
           </div>
-          <div className="pt-8 border-t border-[#E2E8F0] text-xs text-secondary">
-            © {new Date().getFullYear()} MottiManager. All rights reserved.
-          </div>
+          <p className="text-sm text-secondary">© {new Date().getFullYear()} MottiManager. School management for East Africa.</p>
         </div>
       </footer>
     </div>

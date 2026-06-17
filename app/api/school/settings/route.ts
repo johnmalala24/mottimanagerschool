@@ -35,6 +35,7 @@ export async function PATCH(request: NextRequest) {
       disabledRoles,
       cbeEnabled: body.cbeEnabled,
       smsEnabled: body.smsEnabled,
+      emailEnabled: body.emailEnabled,
       whatsappEnabled: body.whatsappEnabled,
       transportEnabled: body.transportEnabled,
       libraryEnabled: body.libraryEnabled,

@@ -65,7 +65,7 @@ export async function markClassAttendance(
   const cls = await prisma.class.findFirst({ where: { id: classId, schoolId } });
   if (!cls) throw new Error("Class not found");
 
-  return prisma.$transaction(
+  const result = await prisma.$transaction(
     records.map((r) =>
       prisma.attendance.upsert({
         where: {
@@ -92,6 +92,37 @@ export async function markClassAttendance(
       })
     )
   );
+
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+    select: { name: true },
+  });
+  const { notifyStudentParent } = await import("@/lib/server/notifications");
+  const { notifyParentByEmail } = await import("@/lib/server/email");
+
+  for (const r of records) {
+    if (r.status === "Absent") {
+      await notifyStudentParent({
+        schoolId,
+        studentId: r.studentId,
+        title: "Absence recorded",
+        message: `Your child was marked absent on ${day.toLocaleDateString("en-KE")}.`,
+        type: "Warning",
+        actionUrl: "/parent/attendance",
+      });
+      await notifyParentByEmail({
+        schoolId,
+        schoolName: school?.name ?? "School",
+        studentId: r.studentId,
+        subject: `Attendance alert — ${school?.name}`,
+        title: "Absence Alert",
+        body: `Dear Parent,\n\nYour child was marked absent today (${day.toLocaleDateString("en-KE")}).\n\nPlease contact the school if this is incorrect.`,
+        type: "attendance_alert",
+      });
+    }
+  }
+
+  return result;
 }
 
 export async function createGrade(
@@ -167,7 +198,13 @@ export async function createCbeAssessment(
 
 export async function createAnnouncement(
   schoolId: string,
-  data: { title: string; message: string; sendSms?: boolean; createdById?: string }
+  data: {
+    title: string;
+    message: string;
+    sendSms?: boolean;
+    sendEmail?: boolean;
+    createdById?: string;
+  }
 ) {
   const recipientCount = await prisma.user.count({
     where: {
@@ -176,16 +213,53 @@ export async function createAnnouncement(
       active: true,
     },
   });
-  return prisma.announcement.create({
+
+  const sendEmail = data.sendEmail ?? data.sendSms ?? false;
+
+  const announcement = await prisma.announcement.create({
     data: {
       schoolId,
       title: data.title,
       message: data.message,
       sendSms: data.sendSms ?? false,
+      sendEmail,
       recipientCount,
       createdById: data.createdById,
     },
   });
+
+  const { notifyRoleUsers } = await import("@/lib/server/notifications");
+  await notifyRoleUsers({
+    schoolId,
+    roles: ["PARENT", "STUDENT", "TEACHER", "CLASS_TEACHER"],
+    title: data.title,
+    message: data.message.slice(0, 200),
+    type: "Info",
+    actionUrl: "/parent/announcements",
+  });
+
+  if (sendEmail) {
+    const school = await prisma.school.findUnique({
+      where: { id: schoolId },
+      select: { name: true },
+    });
+    const { sendBulkSchoolEmail } = await import("@/lib/server/email");
+    const result = await sendBulkSchoolEmail({
+      schoolId,
+      schoolName: school?.name ?? "School",
+      subject: data.title,
+      title: data.title,
+      body: data.message,
+      roles: ["PARENT", "STUDENT", "TEACHER", "CLASS_TEACHER"],
+      type: "announcement",
+    });
+    await prisma.announcement.update({
+      where: { id: announcement.id },
+      data: { emailsSent: result.sent },
+    });
+  }
+
+  return announcement;
 }
 
 export async function createDisciplineRecord(
@@ -357,6 +431,41 @@ export async function recordFeePayment(
   if (data.invoiceId) {
     await reconcileInvoice(data.invoiceId, data.amount);
   }
+
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+    select: { name: true },
+  });
+  const { notifyStudentParent, notifyRoleUsers } = await import("@/lib/server/notifications");
+  const { notifyParentByEmail } = await import("@/lib/server/email");
+
+  await notifyStudentParent({
+    schoolId,
+    studentId: data.studentId,
+    title: "Payment received",
+    message: `Payment of KES ${data.amount.toLocaleString()} recorded successfully.`,
+    type: "Success",
+    actionUrl: "/parent/fees",
+  });
+
+  await notifyParentByEmail({
+    schoolId,
+    schoolName: school?.name ?? "School",
+    studentId: data.studentId,
+    subject: `Payment receipt — ${school?.name}`,
+    title: "Payment Confirmation",
+    body: `Dear Parent,\n\nWe confirm receipt of KES ${data.amount.toLocaleString()} via ${data.mode}.\n\nTransaction ref: ${data.transactionId ?? "N/A"}\n\nThank you for your payment.`,
+    type: "payment_receipt",
+  });
+
+  await notifyRoleUsers({
+    schoolId,
+    roles: ["FINANCE", "SCHOOL_ADMIN"],
+    title: "Fee payment recorded",
+    message: `KES ${data.amount.toLocaleString()} received via ${data.mode}.`,
+    type: "Success",
+    actionUrl: "/finance",
+  });
 
   return payment;
 }
@@ -793,4 +902,118 @@ export async function logSchoolAudit(
 
 export function canManageProfiles(role: UserRole): boolean {
   return ["SCHOOL_ADMIN", "DEPUTY_ADMIN", "ICT_ADMIN"].includes(role);
+}
+
+export async function submitAssignment(
+  schoolId: string,
+  studentId: string,
+  data: { assignmentId: string; content?: string; fileUrl?: string }
+) {
+  const assignment = await prisma.assignment.findFirst({
+    where: { id: data.assignmentId, schoolId },
+  });
+  if (!assignment) throw new Error("Assignment not found");
+  if (assignment.status !== "Open") throw new Error("Assignment is closed");
+
+  const isLate = assignment.dueDate ? new Date() > assignment.dueDate : false;
+
+  const submission = await prisma.assignmentSubmission.upsert({
+    where: {
+      assignmentId_studentId: { assignmentId: data.assignmentId, studentId },
+    },
+    create: {
+      schoolId,
+      assignmentId: data.assignmentId,
+      studentId,
+      content: data.content,
+      fileUrl: data.fileUrl,
+      status: isLate ? "LATE" : "SUBMITTED",
+      submittedAt: new Date(),
+    },
+    update: {
+      content: data.content,
+      fileUrl: data.fileUrl,
+      status: isLate ? "LATE" : "SUBMITTED",
+      submittedAt: new Date(),
+    },
+  });
+
+  const student = await prisma.student.findUnique({
+    where: { id: studentId },
+    include: { user: { select: { name: true } }, class: true },
+  });
+
+  if (assignment.teacherId) {
+    const teacher = await prisma.teacher.findUnique({
+      where: { id: assignment.teacherId },
+      select: { userId: true },
+    });
+    if (teacher) {
+      const { createNotification } = await import("@/lib/server/notifications");
+      await createNotification({
+        userId: teacher.userId,
+        schoolId,
+        title: "New assignment submission",
+        message: `${student?.user.name ?? "A student"} submitted "${assignment.title}".`,
+        type: "Info",
+        actionUrl: "/teacher/assignments",
+      });
+    }
+  }
+
+  return submission;
+}
+
+export async function gradeAssignmentSubmission(
+  schoolId: string,
+  data: { submissionId: string; score: number; feedback?: string }
+) {
+  const submission = await prisma.assignmentSubmission.findFirst({
+    where: { id: data.submissionId, schoolId },
+    include: { assignment: true },
+  });
+  if (!submission) throw new Error("Submission not found");
+
+  const max = submission.assignment.maxScore;
+  if (data.score < 0 || data.score > max) {
+    throw new Error(`Score must be between 0 and ${max}`);
+  }
+
+  const updated = await prisma.assignmentSubmission.update({
+    where: { id: data.submissionId },
+    data: {
+      score: data.score,
+      feedback: data.feedback,
+      status: "GRADED",
+      gradedAt: new Date(),
+    },
+  });
+
+  const { notifyStudentParent } = await import("@/lib/server/notifications");
+  const { notifyParentByEmail } = await import("@/lib/server/email");
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+    select: { name: true },
+  });
+
+  await notifyStudentParent({
+    schoolId,
+    studentId: submission.studentId,
+    title: "Assignment graded",
+    message: `"${submission.assignment.title}" scored ${data.score}/${max}.`,
+    type: "Success",
+    actionUrl: "/student/assignments",
+  });
+
+  await notifyParentByEmail({
+    schoolId,
+    schoolName: school?.name ?? "School",
+    studentId: submission.studentId,
+    subject: `Assignment graded — ${school?.name}`,
+    title: submission.assignment.title,
+    body: `Score: ${data.score}/${max}${data.feedback ? `\n\nFeedback: ${data.feedback}` : ""}`,
+    type: "assignment",
+  });
+
+  return updated;
 }

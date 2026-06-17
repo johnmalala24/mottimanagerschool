@@ -5,11 +5,13 @@ export const schoolAdminNav: NavItem[] = [
   { label: "Student Mgmt", icon: "groups", href: "/school-admin/students" },
   { label: "Attendance", icon: "calendar_today", href: "/school-admin/attendance" },
   { label: "Fees & M-Pesa", icon: "payments", href: "/school-admin/fees" },
-  { label: "Exams & CBE", icon: "analytics", href: "/school-admin/exams" },
+  { label: "Exams", icon: "analytics", href: "/school-admin/exams" },
+  { label: "CBE Curriculum", icon: "auto_awesome", href: "/school-admin/cbe" },
+  { label: "Promotion", icon: "trending_up", href: "/school-admin/promotion" },
   { label: "Staff", icon: "badge", href: "/school-admin/staff" },
   { label: "Classes", icon: "class", href: "/school-admin/classes" },
   { label: "Communication", icon: "campaign", href: "/school-admin/communication" },
-  { label: "Reports", icon: "summarize", href: "/school-admin/reports" },
+  { label: "Analytics", icon: "summarize", href: "/school-admin/reports" },
 ];
 
 export const schoolAdminBottomNav: NavItem[] = [

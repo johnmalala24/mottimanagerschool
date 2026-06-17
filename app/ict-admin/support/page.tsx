@@ -1,12 +1,12 @@
 import PageHeader from "@/components/portal/PageHeader";
-import EmptyState from "@/components/portal/EmptyState";
+import UserProfileSettings from "@/components/portal/UserProfileSettings";
 
-export default function Page() {
+export default function IctSupportPage() {
   return (
     <>
-      <PageHeader title="Support" />
-      <div className="p-lg">
-        <EmptyState icon="construction" title="Support" description="This section is available in your role portal." />
+      <PageHeader title="ICT Support" subtitle="Profile and technical support." />
+      <div className="tonal-card rounded-xl p-lg max-w-lg">
+        <UserProfileSettings />
       </div>
     </>
   );

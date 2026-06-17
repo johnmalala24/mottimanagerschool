@@ -1,8 +1,10 @@
 import PageHeader from "@/components/portal/PageHeader";
 import EmptyState from "@/components/portal/EmptyState";
 import StatusBadge, { statusVariant } from "@/components/portal/StatusBadge";
+import { ManualMpesaForm, SendRemindersButton } from "@/components/portal/FinanceWorkflow";
 import { getSchoolContext } from "@/lib/server/context";
 import { getSchoolFeeData } from "@/lib/server/school-admin";
+import { prisma } from "@/lib/prisma";
 import { formatDate, formatKES } from "@/lib/format";
 
 export default async function FinanceMpesaPage() {
@@ -10,22 +12,43 @@ export default async function FinanceMpesaPage() {
   if (!schoolId) {
     return (
       <>
-        <PageHeader title="M-Pesa Tracking" />
+        <PageHeader title="M-Pesa & Payments" />
         <div className="p-lg"><EmptyState icon="smartphone" title="No school linked" /></div>
       </>
     );
   }
 
-  const { mpesa } = await getSchoolFeeData(schoolId);
+  const { mpesa, invoices } = await getSchoolFeeData(schoolId);
+  const students = await prisma.student.findMany({
+    where: { schoolId, status: "ACTIVE" },
+    include: { user: { select: { name: true } } },
+    orderBy: { registrationNumber: "asc" },
+  });
 
   return (
     <>
-      <PageHeader title="M-Pesa Tracking" subtitle="STK Push, C2B, and manual reconciliation." />
-      <div className="p-lg">
+      <PageHeader
+        title="M-Pesa & Manual Payments"
+        subtitle="Record payments manually until M-Pesa API is connected. Parents receive email receipts."
+        actions={<SendRemindersButton />}
+      />
+      <div className="flex flex-col gap-lg">
+        <ManualMpesaForm
+          students={students.map((s) => ({ id: s.id, name: s.user.name ?? "Student" }))}
+          invoices={invoices.map((i) => ({
+            id: i.id,
+            studentId: i.studentId,
+            invoiceNumber: i.invoiceNumber,
+            balance: i.balance,
+            academicYear: i.academicYear,
+          }))}
+        />
+
         {mpesa.length === 0 ? (
-          <EmptyState icon="smartphone" title="No M-Pesa transactions" />
+          <EmptyState icon="smartphone" title="No transactions yet" description="Record your first payment above." />
         ) : (
           <div className="tonal-card rounded-xl overflow-hidden">
+            <h3 className="text-title-md font-bold p-lg border-b border-outline-variant">Transaction History</h3>
             <table className="w-full">
               <thead className="bg-surface-container-low">
                 <tr>

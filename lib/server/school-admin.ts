@@ -226,6 +226,7 @@ export type SchoolSettingsUpdate = {
   disabledRoles?: import("@prisma/client").UserRole[];
   cbeEnabled?: boolean;
   smsEnabled?: boolean;
+  emailEnabled?: boolean;
   whatsappEnabled?: boolean;
   transportEnabled?: boolean;
   libraryEnabled?: boolean;

@@ -26,6 +26,7 @@ export async function getParentChildData(parentId: string, schoolId: string) {
       class: true,
       attendance: { orderBy: { date: "desc" }, take: 30 },
       grades: {
+        where: { isPublished: true },
         include: { subject: true },
         orderBy: { createdAt: "desc" },
         take: 20,

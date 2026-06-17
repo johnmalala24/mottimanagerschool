@@ -103,7 +103,7 @@ export function CreateAnnouncementForm() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
-  const [sendSms, setSendSms] = useState(false);
+  const [sendEmail, setSendEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -115,7 +115,7 @@ export function CreateAnnouncementForm() {
       const res = await fetch("/api/school/announcements", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, message, sendSms }),
+        body: JSON.stringify({ title, message, sendEmail }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -136,8 +136,8 @@ export function CreateAnnouncementForm() {
       <input className="input-premium" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
       <textarea className="input-premium min-h-24" placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} required />
       <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" checked={sendSms} onChange={(e) => setSendSms(e.target.checked)} className="accent-primary" />
-        Flag for SMS (when SMS integration is enabled)
+        <input type="checkbox" checked={sendEmail} onChange={(e) => setSendEmail(e.target.checked)} className="accent-primary" />
+        Send email to parents, students & teachers
       </label>
       <button type="submit" disabled={loading} className="btn-primary !w-auto px-6">{loading ? "Sending..." : "Publish"}</button>
     </form>

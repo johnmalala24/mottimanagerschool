@@ -33,6 +33,7 @@ export default async function SchoolAdminSettingsPage() {
         disabledRoles: settings.disabledRoles,
         cbeEnabled: settings.cbeEnabled,
         smsEnabled: settings.smsEnabled,
+        emailEnabled: settings.emailEnabled ?? true,
         whatsappEnabled: settings.whatsappEnabled,
         transportEnabled: settings.transportEnabled,
         libraryEnabled: settings.libraryEnabled,

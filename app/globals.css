@@ -610,17 +610,37 @@ html {
   }
 }
 
-/* ============ Print / Report Styles ============ */
+/* ============ Stitch-inspired UI helpers ============ */
+.progress-step {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.mpesa-slot {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  background: #f1f5f9;
+}
+
+.report-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
 @media print {
   aside,
   nav,
-  .no-print {
+  .no-print,
+  .sticky {
     display: none !important;
   }
 
   main {
     margin-left: 0 !important;
     padding: 0 !important;
+  }
+
+  .report-card {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
   }
 
   .school-report-document {
