@@ -5,6 +5,7 @@ export const teacherNav: NavItem[] = [
   { label: "My Classes", icon: "class", href: "/teacher/classes" },
   { label: "My Subjects", icon: "book", href: "/teacher/subjects" },
   { label: "Attendance", icon: "fact_check", href: "/teacher/attendance" },
+  { label: "Exams", icon: "quiz", href: "/teacher/exams" },
   { label: "Exam Marks", icon: "grade", href: "/teacher/marks" },
   { label: "Assignments", icon: "assignment", href: "/teacher/assignments" },
   { label: "CBE Assessment", icon: "auto_awesome", href: "/teacher/cbe" },

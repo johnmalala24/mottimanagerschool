@@ -5,22 +5,21 @@ import { TableSearch, Pagination } from "@/components/portal/ListsCommon";
 import { getSchoolContext } from "@/lib/server/context";
 import { getTeacherRecord } from "@/lib/server/teacher";
 import { prisma } from "@/lib/prisma";
-import { formatDate } from "@/lib/format";
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
 
-export default async function TeacherAssignmentsPage(props: {
+export default async function TeacherExamsPage(props: {
   searchParams: SearchParams;
 }) {
   const { schoolId } = await getSchoolContext();
   const teacher = await getTeacherRecord();
-  
+
   if (!schoolId || !teacher) {
     return (
       <>
-        <PageHeader title="Assignments" />
+        <PageHeader title="Exams" />
         <div className="p-lg">
-          <EmptyState icon="assignment" title="Teacher not found" />
+          <EmptyState icon="grade" title="Teacher not found" />
         </div>
       </>
     );
@@ -37,28 +36,27 @@ export default async function TeacherAssignmentsPage(props: {
   // Build Prisma query
   const where: any = {
     schoolId,
-    teacherId: teacher.id,
+    classId: { in: teacher.classesTeaching.map((c) => c.id) },
   };
 
   if (classFilter) {
     where.classId = classFilter;
   }
   if (search) {
-    where.title = { contains: search, mode: "insensitive" };
+    where.name = { contains: search, mode: "insensitive" };
   }
 
-  const [assignments, count, subjects, teacherClasses] = await Promise.all([
-    prisma.assignment.findMany({
+  const [exams, count, subjects, teacherClasses] = await Promise.all([
+    prisma.exam.findMany({
       where,
       include: {
         class: { select: { id: true, name: true } },
-        subject: { select: { id: true, name: true } },
       },
       orderBy: { createdAt: "desc" },
       take: limit,
       skip,
     }),
-    prisma.assignment.count({ where }),
+    prisma.exam.count({ where }),
     prisma.subject.findMany({
       where: { schoolId },
       select: { id: true, name: true },
@@ -75,10 +73,10 @@ export default async function TeacherAssignmentsPage(props: {
   return (
     <>
       <PageHeader
-        title="Assignments"
-        subtitle="Manage classroom assignments and student homework."
+        title="Exams"
+        subtitle="Manage exams, set status, and publish grades."
       />
-      
+
       <div className="space-y-lg mt-md">
         {/* Actions & Filters */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-md bg-surface p-md rounded-xl border border-outline-variant">
@@ -107,20 +105,20 @@ export default async function TeacherAssignmentsPage(props: {
               </select>
             </form>
           </div>
-          
+
           <FormModal
-            table="assignment"
+            table="exam"
             type="create"
             classes={classesOptions}
             subjects={subjectsOptions}
           />
         </div>
 
-        {assignments.length === 0 ? (
+        {exams.length === 0 ? (
           <EmptyState
-            icon="assignment"
-            title="No assignments found"
-            description="Create your first assignment using the '+' button above."
+            icon="grade"
+            title="No exams found"
+            description="Create your first exam using the '+' button above."
           />
         ) : (
           <div className="bg-surface border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
@@ -128,28 +126,30 @@ export default async function TeacherAssignmentsPage(props: {
               <table className="w-full">
                 <thead className="bg-surface-container-low">
                   <tr className="border-b border-outline-variant">
-                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Title</th>
-                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Subject</th>
+                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Exam Name</th>
                     <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Class</th>
-                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Due Date</th>
-                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Max Score</th>
+                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Term</th>
+                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Academic Year</th>
+                    <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Max Marks</th>
                     <th className="text-left px-lg py-md text-label-sm font-bold text-secondary uppercase">Status</th>
                     <th className="text-center px-lg py-md text-label-sm font-bold text-secondary uppercase w-28">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant">
-                  {assignments.map((item) => (
+                  {exams.map((item) => (
                     <tr key={item.id} className="hover:bg-surface-container-low transition-colors">
-                      <td className="px-lg py-md font-semibold text-body-large">{item.title}</td>
-                      <td className="px-lg py-md text-secondary">{item.subject?.name ?? "—"}</td>
+                      <td className="px-lg py-md font-semibold text-body-large">{item.name}</td>
                       <td className="px-lg py-md text-secondary">{item.class.name}</td>
-                      <td className="px-lg py-md text-secondary">
-                        {item.dueDate ? formatDate(item.dueDate) : "—"}
-                      </td>
-                      <td className="px-lg py-md font-bold">{item.maxScore}</td>
+                      <td className="px-lg py-md text-secondary">{item.term}</td>
+                      <td className="px-lg py-md text-secondary">{item.academicYear}</td>
+                      <td className="px-lg py-md font-bold">{item.maxMarks}</td>
                       <td className="px-lg py-md">
                         <span className={`text-label-sm px-sm py-xs rounded-full font-semibold ${
-                          item.status === "Open" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                          item.status === "PUBLISHED"
+                            ? "bg-green-100 text-green-800"
+                            : item.status === "OPEN"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-amber-100 text-amber-800"
                         }`}>
                           {item.status}
                         </span>
@@ -157,14 +157,14 @@ export default async function TeacherAssignmentsPage(props: {
                       <td className="px-lg py-md">
                         <div className="flex items-center justify-center gap-xs">
                           <FormModal
-                            table="assignment"
+                            table="exam"
                             type="update"
                             data={item}
                             classes={classesOptions}
                             subjects={subjectsOptions}
                           />
                           <FormModal
-                            table="assignment"
+                            table="exam"
                             type="delete"
                             data={item}
                             classes={classesOptions}
@@ -177,7 +177,7 @@ export default async function TeacherAssignmentsPage(props: {
                 </tbody>
               </table>
             </div>
-            
+
             <Pagination page={page} count={count} limit={limit} />
           </div>
         )}
